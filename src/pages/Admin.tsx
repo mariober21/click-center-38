@@ -5,11 +5,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Users, Settings, Shield, BarChart, FileText, Lock } from "lucide-react";
+import { 
+  ArrowLeft, 
+  Users, 
+  Settings, 
+  Shield, 
+  BarChart, 
+  FileText, 
+  Lock,
+  Home,
+  ShoppingBag,
+  Undo,
+  UserRound,
+  Cog,
+  ShoppingCart
+} from "lucide-react";
 
 const Admin = () => {
   const [userName, setUserName] = useState<string>("Admin");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("dashboard");
   
   // Get user name from localStorage
   useEffect(() => {
@@ -39,6 +54,10 @@ const Admin = () => {
   const handleLogout = () => {
     localStorage.removeItem("userName");
     window.location.href = "/";
+  };
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -76,22 +95,59 @@ const Admin = () => {
               <Shield size={20} />
               <span>Painel de Controle</span>
             </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <Home size={20} />
+              <span>Início</span>
+            </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <ShoppingBag size={20} />
+              <span>Minhas Compras</span>
+            </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <Undo size={20} />
+              <span>Canceladas/Reembolso</span>
+            </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <UserRound size={20} />
+              <span>Minha Conta</span>
+            </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <Cog size={20} />
+              <span>Gerenciar Meu Negócio</span>
+            </Link>
+            
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <ShoppingCart size={20} />
+              <span>Comprar Um Produto</span>
+            </Link>
+            
+            <hr className="my-4 border-gray-200" />
+            
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <Users size={20} />
               <span>Usuários</span>
             </Link>
+            
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <FileText size={20} />
               <span>Cursos</span>
             </Link>
+            
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <BarChart size={20} />
               <span>Relatórios</span>
             </Link>
+            
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <Settings size={20} />
               <span>Configurações</span>
             </Link>
+            
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <Lock size={20} />
               <span>Permissões</span>
@@ -108,14 +164,56 @@ const Admin = () => {
               </Button>
             </div>
             
-            <Tabs defaultValue="users">
+            <Tabs value={activeTab} onValueChange={handleTabChange}>
               <TabsList className="mb-6">
+                <TabsTrigger value="dashboard">Painel Inicial</TabsTrigger>
                 <TabsTrigger value="users">Usuários</TabsTrigger>
-                <TabsTrigger value="courses">Cursos</TabsTrigger>
-                <TabsTrigger value="settings">Configurações</TabsTrigger>
-                <TabsTrigger value="reports">Relatórios</TabsTrigger>
-                <TabsTrigger value="permissions">Permissões</TabsTrigger>
+                <TabsTrigger value="purchases">Compras</TabsTrigger>
+                <TabsTrigger value="refunds">Reembolsos</TabsTrigger>
+                <TabsTrigger value="account">Minha Conta</TabsTrigger>
+                <TabsTrigger value="business">Meu Negócio</TabsTrigger>
+                <TabsTrigger value="shop">Loja</TabsTrigger>
               </TabsList>
+              
+              <TabsContent value="dashboard">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Painel de Controle</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-4">Bem-vindo ao painel de administração da ClickCenter. Aqui você pode gerenciar usuários, cursos, vendas e configurações da plataforma.</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Total de Usuários</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-3xl font-bold">{users.length}</p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Cursos Ativos</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-3xl font-bold">12</p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Vendas Hoje</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-3xl font-bold">8</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
               
               <TabsContent value="users">
                 <Card>
@@ -175,49 +273,309 @@ const Admin = () => {
                 </Card>
               </TabsContent>
               
-              <TabsContent value="courses">
+              <TabsContent value="purchases">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Gerenciar Cursos</CardTitle>
+                    <CardTitle>Minhas Compras</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-500">Interface para gerenciar todos os cursos da plataforma.</p>
+                    <p className="text-gray-600 mb-4">Gerencie suas compras e encontre outros produtos para se afiliar.</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Curso Marketing Digital</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p>Programa completo de marketing online</p>
+                          <p className="text-sm text-gray-500">Comprado em: 12/04/2023</p>
+                          <div className="flex justify-between">
+                            <Button size="sm" variant="outline">Acessar</Button>
+                            <Button size="sm" variant="outline">Ser afiliado</Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Ebook Vendas Online</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p>Estratégias avançadas de vendas</p>
+                          <p className="text-sm text-gray-500">Comprado em: 05/03/2023</p>
+                          <div className="flex justify-between">
+                            <Button size="sm" variant="outline">Acessar</Button>
+                            <Button size="sm" variant="outline">Ser afiliado</Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">Afilie-se</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p>Encontre novos produtos para promover e ganhe comissões</p>
+                          <Button className="w-full">Ver Produtos Disponíveis</Button>
+                        </CardContent>
+                      </Card>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
               
-              <TabsContent value="settings">
+              <TabsContent value="refunds">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Configurações da Plataforma</CardTitle>
+                    <CardTitle>Cancelamentos e Reembolsos</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-500">Configurações gerais da plataforma.</p>
+                    <p className="text-gray-600 mb-4">Gerencie seus pedidos de cancelamento e solicitações de reembolso.</p>
+                    
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="py-2 text-left">Produto</th>
+                            <th className="py-2 text-left">Data da Compra</th>
+                            <th className="py-2 text-left">Valor</th>
+                            <th className="py-2 text-left">Status</th>
+                            <th className="py-2 text-left">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b">
+                            <td className="py-3">Curso de Copywriting</td>
+                            <td className="py-3">10/04/2023</td>
+                            <td className="py-3">R$ 297,00</td>
+                            <td className="py-3">
+                              <span className="px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                Reembolso Pendente
+                              </span>
+                            </td>
+                            <td className="py-3">
+                              <Button variant="ghost" size="sm">Detalhes</Button>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-3">Webinar Premium</td>
+                            <td className="py-3">22/03/2023</td>
+                            <td className="py-3">R$ 97,00</td>
+                            <td className="py-3">
+                              <span className="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                                Reembolso Aprovado
+                              </span>
+                            </td>
+                            <td className="py-3">
+                              <Button variant="ghost" size="sm">Detalhes</Button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
               
-              <TabsContent value="reports">
+              <TabsContent value="account">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Relatórios e Análises</CardTitle>
+                    <CardTitle>Minha Conta</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-500">Visualizar estatísticas e relatórios da plataforma.</p>
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-medium mb-2">Informações Pessoais</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm text-gray-500">Nome</label>
+                            <Input defaultValue={userName} />
+                          </div>
+                          <div>
+                            <label className="text-sm text-gray-500">Email</label>
+                            <Input defaultValue="admin@clickcenter.com" />
+                          </div>
+                          <div>
+                            <label className="text-sm text-gray-500">Telefone</label>
+                            <Input defaultValue="(11) 99999-9999" />
+                          </div>
+                          <div>
+                            <label className="text-sm text-gray-500">CPF/CNPJ</label>
+                            <Input defaultValue="123.456.789-00" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-medium mb-2">Segurança</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm text-gray-500">Senha Atual</label>
+                            <Input type="password" />
+                          </div>
+                          <div>
+                            <label className="text-sm text-gray-500">Nova Senha</label>
+                            <Input type="password" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <Button>Salvar Alterações</Button>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
               
-              <TabsContent value="permissions">
+              <TabsContent value="business">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Gerenciar Permissões</CardTitle>
+                    <CardTitle>Gerenciar Meu Negócio</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-500">Configurar permissões de usuários e funções.</p>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Links para Divulgação</h3>
+                        <div className="space-y-3">
+                          <div className="flex flex-col md:flex-row md:items-center gap-2">
+                            <div className="flex-1">
+                              <Input value="https://clickcenter.com/af/curso-marketing?ref=admin" readOnly />
+                            </div>
+                            <Button variant="outline">Copiar Link</Button>
+                          </div>
+                          <div className="flex flex-col md:flex-row md:items-center gap-2">
+                            <div className="flex-1">
+                              <Input value="https://clickcenter.com/af/ebook-vendas?ref=admin" readOnly />
+                            </div>
+                            <Button variant="outline">Copiar Link</Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Seus Produtos</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <Card>
+                            <CardHeader className="pb-2">
+                              <CardTitle className="text-base">Ebook: Estratégias de Tráfego</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-2">
+                              <p className="text-sm">15 vendas este mês</p>
+                              <div className="flex justify-between">
+                                <Button size="sm" variant="outline">Editar</Button>
+                                <Button size="sm" variant="outline">Estatísticas</Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          
+                          <Card>
+                            <CardHeader className="pb-2">
+                              <CardTitle className="text-base">Curso: Produtividade Total</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-2">
+                              <p className="text-sm">8 vendas este mês</p>
+                              <div className="flex justify-between">
+                                <Button size="sm" variant="outline">Editar</Button>
+                                <Button size="sm" variant="outline">Estatísticas</Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          
+                          <Card className="border-dashed border-2">
+                            <CardContent className="flex flex-col items-center justify-center h-full py-6">
+                              <p className="mb-2 text-center">Adicionar Novo Produto</p>
+                              <Button variant="outline">+ Criar Produto</Button>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Gerenciar Alunos</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="border-b">
+                                <th className="py-2 text-left">Aluno</th>
+                                <th className="py-2 text-left">Curso</th>
+                                <th className="py-2 text-left">Progresso</th>
+                                <th className="py-2 text-left">Data de Inscrição</th>
+                                <th className="py-2 text-left">Ações</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b">
+                                <td className="py-3">Pedro Costa</td>
+                                <td className="py-3">Produtividade Total</td>
+                                <td className="py-3">75%</td>
+                                <td className="py-3">15/04/2023</td>
+                                <td className="py-3">
+                                  <Button variant="ghost" size="sm">Detalhes</Button>
+                                </td>
+                              </tr>
+                              <tr className="border-b">
+                                <td className="py-3">Mariana Souza</td>
+                                <td className="py-3">Produtividade Total</td>
+                                <td className="py-3">35%</td>
+                                <td className="py-3">20/04/2023</td>
+                                <td className="py-3">
+                                  <Button variant="ghost" size="sm">Detalhes</Button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
+              
+              <TabsContent value="shop">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Comprar Um Produto</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-6">Descubra novos produtos para adquirir e complementar seu negócio.</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-base">Curso Avançado de SEO</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p className="text-sm">Domine as técnicas mais avançadas de SEO e posicionamento nos buscadores.</p>
+                          <p className="font-bold text-lg">R$ 397,00</p>
+                          <Button className="w-full">Saiba Mais</Button>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-base">Membership Pro</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p className="text-sm">Crie seu próprio site de membros e monetize seu conhecimento.</p>
+                          <p className="font-bold text-lg">R$ 997,00</p>
+                          <Button className="w-full">Saiba Mais</Button>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-base">Pacote Templates</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <p className="text-sm">50+ templates profissionais para suas apresentações e propostas.</p>
+                          <p className="font-bold text-lg">R$ 197,00</p>
+                          <Button className="w-full">Saiba Mais</Button>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
             </Tabs>
           </div>
         </main>
