@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -90,9 +89,11 @@ const AdminDashboard = () => {
               </div>
             </CardContent>
             <CardFooter className="pt-0 pb-2">
-              <Button variant="ghost" size="sm" className="text-xs p-0 h-auto text-violet-500 hover:text-violet-600 hover:bg-transparent">
-                Gerenciar produtos <ArrowRight size={12} className="ml-1" />
-              </Button>
+              <Link to="/admin/products">
+                <Button variant="ghost" size="sm" className="text-xs p-0 h-auto text-violet-500 hover:text-violet-600 hover:bg-transparent">
+                  Gerenciar produtos <ArrowRight size={12} className="ml-1" />
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
           
