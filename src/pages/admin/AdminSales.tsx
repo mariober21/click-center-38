@@ -13,19 +13,19 @@ const AdminSales = () => {
   const currentPath = location.pathname;
 
   const renderContent = () => {
-    switch (currentPath) {
-      case "/admin/sales/balance":
-        return <SalesBalance />;
-      case "/admin/sales/statement":
-        return <SalesStatement />;
-      case "/admin/sales/monthly":
-        return <SalesMonthly />;
-      case "/admin/sales/withdraw":
-        return <SalesWithdraw />;
-      case "/admin/sales/advance":
-        return <SalesAdvance />;
-      default:
-        return <SalesDashboard />;
+    // Ajustando as rotas para garantir que correspondam exatamente ao que está no AdminLayout.tsx
+    if (currentPath === "/admin/wallet/balance" || currentPath === "/admin/sales/balance") {
+      return <SalesBalance />;
+    } else if (currentPath === "/admin/wallet/transactions" || currentPath === "/admin/sales/statement") {
+      return <SalesStatement />;
+    } else if (currentPath === "/admin/sales/monthly") {
+      return <SalesMonthly />;
+    } else if (currentPath === "/admin/wallet/withdraw" || currentPath === "/admin/sales/withdraw") {
+      return <SalesWithdraw />;
+    } else if (currentPath === "/admin/sales/advance") {
+      return <SalesAdvance />;
+    } else {
+      return <SalesDashboard />;
     }
   };
 

@@ -5,9 +5,15 @@ import { Wallet, FileText, BarChart3, ArrowDown, ArrowUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SalesDashboard = () => {
+  // Verifica se a URL atual contém "wallet" para usar as rotas de carteira em vez de vendas
+  const isWalletRoute = window.location.pathname.includes("/admin/wallet");
+  
+  // Define a base da rota com base no contexto atual
+  const routeBase = isWalletRoute ? "/admin/wallet" : "/admin/sales";
+
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Vendas</h1>
+      <h1 className="text-2xl font-bold">{isWalletRoute ? "Carteira" : "Vendas"}</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="hover:shadow-md transition-shadow">
@@ -20,7 +26,7 @@ const SalesDashboard = () => {
           <CardContent>
             <p className="text-2xl font-bold">R$ 8.750,35</p>
             <p className="text-xs text-muted-foreground">Atualizado hoje</p>
-            <Link to="/admin/sales/balance">
+            <Link to={`${routeBase}/balance`}>
               <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
             </Link>
           </CardContent>
@@ -36,7 +42,7 @@ const SalesDashboard = () => {
           <CardContent>
             <p className="text-2xl font-bold">32</p>
             <p className="text-xs text-muted-foreground">Transações este mês</p>
-            <Link to="/admin/sales/statement">
+            <Link to={isWalletRoute ? `${routeBase}/transactions` : `${routeBase}/statement`}>
               <Button variant="link" className="p-0 h-auto mt-2">Ver Extrato</Button>
             </Link>
           </CardContent>
@@ -52,7 +58,7 @@ const SalesDashboard = () => {
           <CardContent>
             <p className="text-2xl font-bold">R$ 3.450,00</p>
             <p className="text-xs text-green-600">+22% desde o mês anterior</p>
-            <Link to="/admin/sales/monthly">
+            <Link to={`${routeBase}/monthly`}>
               <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
             </Link>
           </CardContent>
@@ -71,7 +77,7 @@ const SalesDashboard = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Solicite saques do seu saldo disponível para sua conta bancária.
             </p>
-            <Link to="/admin/sales/withdraw">
+            <Link to={`${routeBase}/withdraw`}>
               <Button>Solicitar Saque</Button>
             </Link>
           </CardContent>
@@ -88,7 +94,7 @@ const SalesDashboard = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Antecipe o recebimento de vendas parceladas ou agendadas.
             </p>
-            <Link to="/admin/sales/advance">
+            <Link to={`${routeBase}/advance`}>
               <Button>Solicitar Antecipação</Button>
             </Link>
           </CardContent>
