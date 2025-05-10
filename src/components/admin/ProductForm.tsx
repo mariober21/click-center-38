@@ -23,6 +23,7 @@ const ProductForm = ({ activeTab: initialTab }: ProductFormProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("BRL");
   const [comparePrice, setComparePrice] = useState("");
   const [productType, setProductType] = useState("curso");
   const [status, setStatus] = useState("draft");
@@ -116,6 +117,7 @@ const ProductForm = ({ activeTab: initialTab }: ProductFormProps) => {
       title,
       description,
       price,
+      currency,
       comparePrice,
       productType,
       status,
@@ -181,6 +183,8 @@ const ProductForm = ({ activeTab: initialTab }: ProductFormProps) => {
         // Pricing
         price={price}
         setPrice={setPrice}
+        currency={currency}
+        setCurrency={setCurrency}
         comparePrice={comparePrice}
         setComparePrice={setComparePrice}
         hasSalePrice={hasSalePrice}

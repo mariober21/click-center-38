@@ -38,6 +38,8 @@ interface ProductTabsProps {
   // Pricing
   price: string;
   setPrice: (value: string) => void;
+  currency: string;
+  setCurrency: (value: string) => void;
   comparePrice: string;
   setComparePrice: (value: string) => void;
   hasSalePrice: boolean;
@@ -78,6 +80,8 @@ const ProductTabs = ({
   // Pricing
   price,
   setPrice,
+  currency,
+  setCurrency,
   comparePrice,
   setComparePrice,
   hasSalePrice,
@@ -135,6 +139,8 @@ const ProductTabs = ({
         <PricingTab
           price={price}
           setPrice={setPrice}
+          currency={currency}
+          setCurrency={setCurrency}
           comparePrice={comparePrice}
           setComparePrice={setComparePrice}
           hasSalePrice={hasSalePrice}

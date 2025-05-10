@@ -15,11 +15,13 @@ import {
   CardTitle,
   CardContent
 } from "@/components/ui/card";
-import { Tag, X } from "lucide-react";
+import { Tag, X, DollarSign, Euro, Banknote, CurrencyIcon } from "lucide-react";
 
 interface PricingTabProps {
   price: string;
   setPrice: (value: string) => void;
+  currency: string;
+  setCurrency: (value: string) => void;
   comparePrice: string;
   setComparePrice: (value: string) => void;
   hasSalePrice: boolean;
@@ -32,9 +34,30 @@ interface PricingTabProps {
   onNextTab: () => void;
 }
 
+const currencyOptions = [
+  { value: "BRL", label: "Real Brasileiro (R$)", icon: <Banknote size={16} /> },
+  { value: "USD", label: "Dólar Americano ($)", icon: <DollarSign size={16} /> },
+  { value: "EUR", label: "Euro (€)", icon: <Euro size={16} /> },
+  { value: "GBP", label: "Libra Esterlina (£)", icon: <Banknote size={16} /> },
+  { value: "JPY", label: "Iene Japonês (¥)", icon: <Banknote size={16} /> },
+];
+
+const getCurrencySymbol = (currency: string): string => {
+  switch(currency) {
+    case "BRL": return "R$";
+    case "USD": return "$";
+    case "EUR": return "€";
+    case "GBP": return "£";
+    case "JPY": return "¥";
+    default: return "R$";
+  }
+};
+
 const PricingTab = ({
   price,
   setPrice,
+  currency,
+  setCurrency,
   comparePrice,
   setComparePrice,
   hasSalePrice,
@@ -55,7 +78,26 @@ const PricingTab = ({
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price">Preço (R$)</Label>
+              <Label htmlFor="currency">Moeda</Label>
+              <Select value={currency} onValueChange={setCurrency}>
+                <SelectTrigger id="currency" className="flex items-center gap-2">
+                  <SelectValue placeholder="Selecione a moeda" />
+                </SelectTrigger>
+                <SelectContent>
+                  {currencyOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value} className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        {option.icon}
+                        <span>{option.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="price">Preço ({getCurrencySymbol(currency)})</Label>
               <Input 
                 id="price" 
                 type="number" 
@@ -67,33 +109,33 @@ const PricingTab = ({
                 required
               />
             </div>
-            
-            {hasSalePrice && (
-              <div className="space-y-2">
-                <Label htmlFor="compare-price">Preço Original (R$)</Label>
-                <div className="relative">
-                  <Input 
-                    id="compare-price" 
-                    type="number" 
-                    min="0" 
-                    step="0.01" 
-                    value={comparePrice} 
-                    onChange={(e) => setComparePrice(e.target.value)} 
-                    placeholder="0.00"
-                  />
-                  <Button 
-                    type="button"
-                    variant="ghost" 
-                    size="icon" 
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6"
-                    onClick={() => setHasSalePrice(false)}
-                  >
-                    <X size={14} />
-                  </Button>
-                </div>
-              </div>
-            )}
           </div>
+          
+          {hasSalePrice && (
+            <div className="space-y-2">
+              <Label htmlFor="compare-price">Preço Original ({getCurrencySymbol(currency)})</Label>
+              <div className="relative">
+                <Input 
+                  id="compare-price" 
+                  type="number" 
+                  min="0" 
+                  step="0.01" 
+                  value={comparePrice} 
+                  onChange={(e) => setComparePrice(e.target.value)} 
+                  placeholder="0.00"
+                />
+                <Button 
+                  type="button"
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6"
+                  onClick={() => setHasSalePrice(false)}
+                >
+                  <X size={14} />
+                </Button>
+              </div>
+            </div>
+          )}
           
           {!hasSalePrice && (
             <Button 
