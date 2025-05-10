@@ -2,17 +2,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     // Check if the user is logged in by retrieving their name from localStorage
     const storedUserName = localStorage.getItem("userName");
     if (storedUserName) {
       setUserName(storedUserName);
+      
+      // Check if user is admin (Mário or Rosa Bernardo)
+      if (storedUserName === "Mário Bernardo" || storedUserName === "Rosa Bernardo") {
+        setIsAdmin(true);
+      }
     }
   }, []);
 
@@ -37,6 +43,14 @@ const Navbar = () => {
           
           {userName ? (
             <div className="flex items-center gap-2">
+              {isAdmin && (
+                <Link to="/admin">
+                  <Button variant="outline" className="mr-2 flex items-center gap-1">
+                    <Shield size={16} />
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Link to="/dashboard">
                 <Button variant="outline" className="mr-2">
                   Dashboard
@@ -92,6 +106,14 @@ const Navbar = () => {
                 <div className="text-primary font-medium py-2">
                   Olá, {userName}
                 </div>
+                {isAdmin && (
+                  <Link to="/admin">
+                    <Button className="w-full flex items-center justify-center gap-1 mb-2">
+                      <Shield size={16} />
+                      Área Admin
+                    </Button>
+                  </Link>
+                )}
                 <Link to="/dashboard">
                   <Button className="w-full">
                     Dashboard
