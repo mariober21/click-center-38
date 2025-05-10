@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Users, Settings, Shield } from "lucide-react";
+import { ArrowLeft, Users, Settings, Shield, BarChart, FileText, Lock } from "lucide-react";
 
 const Admin = () => {
   const [userName, setUserName] = useState<string>("Admin");
@@ -47,7 +47,7 @@ const Admin = () => {
       <header className="bg-primary text-white py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-white">EduPro</span>
+            <span className="text-2xl font-bold text-white">ClickCenter</span>
             <span className="bg-white text-primary px-2 py-1 rounded text-xs font-bold">ADMIN</span>
           </Link>
           
@@ -81,8 +81,20 @@ const Admin = () => {
               <span>Usuários</span>
             </Link>
             <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <FileText size={20} />
+              <span>Cursos</span>
+            </Link>
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <BarChart size={20} />
+              <span>Relatórios</span>
+            </Link>
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
               <Settings size={20} />
               <span>Configurações</span>
+            </Link>
+            <Link to="/admin" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+              <Lock size={20} />
+              <span>Permissões</span>
             </Link>
           </nav>
         </aside>
@@ -101,6 +113,8 @@ const Admin = () => {
                 <TabsTrigger value="users">Usuários</TabsTrigger>
                 <TabsTrigger value="courses">Cursos</TabsTrigger>
                 <TabsTrigger value="settings">Configurações</TabsTrigger>
+                <TabsTrigger value="reports">Relatórios</TabsTrigger>
+                <TabsTrigger value="permissions">Permissões</TabsTrigger>
               </TabsList>
               
               <TabsContent value="users">
@@ -179,6 +193,28 @@ const Admin = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-500">Configurações gerais da plataforma.</p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="reports">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Relatórios e Análises</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-500">Visualizar estatísticas e relatórios da plataforma.</p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="permissions">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Gerenciar Permissões</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-500">Configurar permissões de usuários e funções.</p>
                   </CardContent>
                 </Card>
               </TabsContent>

@@ -26,7 +26,7 @@ const Navbar = () => {
     <nav className="bg-white border-b border-gray-200 py-4">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-primary">EduPro</span>
+          <span className="text-2xl font-bold text-primary">ClickCenter</span>
         </Link>
 
         {/* Desktop Menu */}
