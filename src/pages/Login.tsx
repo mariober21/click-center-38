@@ -60,7 +60,7 @@ const Login = () => {
       
       toast({
         title: "Conta criada com sucesso!",
-        description: "Bem-vindo(a) à plataforma EduPro!",
+        description: "Bem-vindo(a) à plataforma ClickCenter!",
       });
       
       // In a real app, you would redirect to dashboard after successful registration
@@ -76,7 +76,7 @@ const Login = () => {
         <div className="w-full max-w-md">
           <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold">Bem-vindo à EduPro</h1>
+              <h1 className="text-2xl font-bold">Bem-vindo à ClickCenter</h1>
               <p className="text-gray-600">Sua jornada de aprendizado começa aqui</p>
             </div>
             
