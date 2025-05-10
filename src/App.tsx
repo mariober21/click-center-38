@@ -30,6 +30,9 @@ import AdminTools from "./pages/admin/AdminTools";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminContent from "./pages/admin/AdminContent";
 
+// Content management pages
+import AdminBlogContent from "./pages/admin/content/AdminBlogContent";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -78,6 +81,17 @@ const App = () => (
           <Route path="/admin/tools/analytics" element={<AdminGuard><AdminTools /></AdminGuard>} />
           <Route path="/admin/tools/automation" element={<AdminGuard><AdminTools /></AdminGuard>} />
           <Route path="/admin/content" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          
+          {/* Content Management Routes */}
+          <Route path="/admin/content/blog" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
+          <Route path="/admin/content/blog/new" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
+          <Route path="/admin/content/blog/edit/:id" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
+          <Route path="/admin/content/pages" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          <Route path="/admin/content/media" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          <Route path="/admin/content/testimonials" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          <Route path="/admin/content/videos" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          <Route path="/admin/content/faq" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          
           <Route path="/admin/settings" element={<AdminGuard><AdminSettings /></AdminGuard>} />
           
           <Route path="*" element={<NotFound />} />

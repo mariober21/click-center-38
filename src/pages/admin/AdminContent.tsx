@@ -3,6 +3,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Edit, Image, Video, LayoutDashboard, FileQuestion } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AdminContent = () => {
   return (
@@ -22,7 +23,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Gerencie posts de blog e artigos do site</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/blog">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
           
@@ -37,7 +40,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Edite páginas estáticas do site</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/pages">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
           
@@ -52,7 +57,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Organize suas imagens, vídeos e arquivos</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/media">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
           
@@ -67,7 +74,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Gerencie os depoimentos de clientes</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/testimonials">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
           
@@ -82,7 +91,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Adicione e gerencie vídeos</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/videos">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
           
@@ -97,7 +108,9 @@ const AdminContent = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Gerencie perguntas frequentes</p>
-              <Button variant="outline" className="w-full">Acessar</Button>
+              <Link to="/admin/content/faq">
+                <Button variant="outline" className="w-full">Acessar</Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
@@ -118,7 +131,9 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Blog Post • Editado 2 dias atrás</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm">Editar</Button>
+                <Link to="/admin/content/blog/edit/1">
+                  <Button variant="ghost" size="sm">Editar</Button>
+                </Link>
               </div>
               <div className="flex items-center justify-between p-4 border-b">
                 <div className="flex items-center gap-3">
@@ -130,7 +145,9 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Página • Editado 1 semana atrás</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm">Editar</Button>
+                <Link to="/admin/content/pages/edit/1">
+                  <Button variant="ghost" size="sm">Editar</Button>
+                </Link>
               </div>
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-3">
@@ -142,7 +159,9 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Vídeo • Adicionado 3 dias atrás</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm">Editar</Button>
+                <Link to="/admin/content/videos/edit/1">
+                  <Button variant="ghost" size="sm">Editar</Button>
+                </Link>
               </div>
             </div>
           </CardContent>
