@@ -1,4 +1,3 @@
-
 import { useState, useEffect, ReactNode } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,16 +11,68 @@ import {
   FileText,
   Home,
   Menu,
-  X
+  X,
+  ChevronDown,
+  ChevronRight,
+  ShoppingCart,
+  Wallet,
+  Wrench,
+  LayoutDashboard
 } from "lucide-react";
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "@/components/ui/collapsible";
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
+interface NavItemProps {
+  to: string;
+  icon: React.ReactNode;
+  label: string;
+  isActive: boolean;
+  isSidebarOpen: boolean;
+  hasSubItems?: boolean;
+  isOpen?: boolean;
+  onClick?: () => void;
+}
+
+// NavItem component for sidebar links
+const NavItem = ({ to, icon, label, isActive, isSidebarOpen, hasSubItems = false, isOpen = false, onClick }: NavItemProps) => (
+  <Link
+    to={to}
+    className={`flex items-center justify-between gap-3 px-3 py-2 rounded-md transition-colors ${
+      isActive 
+        ? "bg-primary text-white" 
+        : "hover:bg-gray-100"
+    }`}
+    onClick={hasSubItems && onClick ? onClick : undefined}
+  >
+    <div className="flex items-center gap-3">
+      {icon}
+      {isSidebarOpen && <span>{label}</span>}
+    </div>
+    {hasSubItems && isSidebarOpen && (
+      isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />
+    )}
+  </Link>
+);
+
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [userName, setUserName] = useState<string>("Admin");
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({
+    products: false,
+    marketing: false,
+    sales: false,
+    partnership: false,
+    tools: false,
+    wallet: false
+  });
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -48,6 +99,13 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const toggleSection = (section: string) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   return (
@@ -96,89 +154,296 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         >
           <div className="p-4">
             <nav className="space-y-1">
-              <Link
+              <NavItem
                 to="/admin"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                <Home size={20} />
-                {isSidebarOpen && <span>Dashboard</span>}
-              </Link>
+                icon={<LayoutDashboard size={20} />}
+                label="Dashboard"
+                isActive={isActive("/admin")}
+                isSidebarOpen={isSidebarOpen}
+              />
               
-              <Link
-                to="/admin/products"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/products") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
+              {/* Products Section */}
+              <Collapsible 
+                open={expandedItems.products}
+                onOpenChange={() => toggleSection('products')}
+                className="w-full"
               >
-                <Package size={20} />
-                {isSidebarOpen && <span>Produtos</span>}
-              </Link>
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<Package size={20} />}
+                    label="Produtos"
+                    isActive={location.pathname.includes("/admin/products")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.products}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/products"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Todos os Produtos
+                      </Link>
+                      <Link
+                        to="/admin/products/add"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products/add") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Adicionar Novo
+                      </Link>
+                      <Link
+                        to="/admin/products/categories"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products/categories") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Categorias
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
               
-              <Link
-                to="/admin/orders"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/orders") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
+              {/* Marketing Section */}
+              <Collapsible 
+                open={expandedItems.marketing}
+                onOpenChange={() => toggleSection('marketing')}
+                className="w-full"
               >
-                <ShoppingBag size={20} />
-                {isSidebarOpen && <span>Pedidos</span>}
-              </Link>
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<BarChart size={20} />}
+                    label="Marketing"
+                    isActive={location.pathname.includes("/admin/marketing")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.marketing}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/marketing/campaigns"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/campaigns") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Campanhas
+                      </Link>
+                      <Link
+                        to="/admin/marketing/email"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/email") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Email Marketing
+                      </Link>
+                      <Link
+                        to="/admin/marketing/analytics"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/analytics") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Analytics
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
               
-              <Link
+              {/* Sales Section */}
+              <Collapsible 
+                open={expandedItems.sales}
+                onOpenChange={() => toggleSection('sales')}
+                className="w-full"
+              >
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<ShoppingCart size={20} />}
+                    label="Vendas"
+                    isActive={location.pathname.includes("/admin/orders")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.sales}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/orders"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Pedidos
+                      </Link>
+                      <Link
+                        to="/admin/orders/refunds"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders/refunds") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Reembolsos
+                      </Link>
+                      <Link
+                        to="/admin/orders/invoices"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders/invoices") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Faturas
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
+              
+              {/* Wallet Section */}
+              <Collapsible 
+                open={expandedItems.wallet}
+                onOpenChange={() => toggleSection('wallet')}
+                className="w-full"
+              >
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<Wallet size={20} />}
+                    label="Carteira"
+                    isActive={location.pathname.includes("/admin/wallet")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.wallet}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/wallet/balance"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/balance") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Saldo
+                      </Link>
+                      <Link
+                        to="/admin/wallet/transactions"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/transactions") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Transações
+                      </Link>
+                      <Link
+                        to="/admin/wallet/withdraw"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/withdraw") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Retiradas
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
+              
+              {/* Partnership Section */}
+              <Collapsible 
+                open={expandedItems.partnership}
+                onOpenChange={() => toggleSection('partnership')}
+                className="w-full"
+              >
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<Users size={20} />}
+                    label="Parcerias"
+                    isActive={location.pathname.includes("/admin/partnership")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.partnership}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/partnership/affiliates"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/affiliates") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Afiliados
+                      </Link>
+                      <Link
+                        to="/admin/partnership/programs"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/programs") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Programas
+                      </Link>
+                      <Link
+                        to="/admin/partnership/commissions"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/commissions") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Comissões
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
+              
+              {/* Tools Section */}
+              <Collapsible 
+                open={expandedItems.tools}
+                onOpenChange={() => toggleSection('tools')}
+                className="w-full"
+              >
+                <CollapsibleTrigger className="w-full">
+                  <NavItem
+                    to="#"
+                    icon={<Wrench size={20} />}
+                    label="Ferramentas"
+                    isActive={location.pathname.includes("/admin/tools")}
+                    isSidebarOpen={isSidebarOpen}
+                    hasSubItems={true}
+                    isOpen={expandedItems.tools}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                  {isSidebarOpen && (
+                    <>
+                      <Link
+                        to="/admin/tools/seo"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/seo") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        SEO
+                      </Link>
+                      <Link
+                        to="/admin/tools/analytics"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/analytics") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Analytics
+                      </Link>
+                      <Link
+                        to="/admin/tools/automation"
+                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/automation") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                      >
+                        Automações
+                      </Link>
+                    </>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
+              
+              {/* Other regular links */}
+              <NavItem
                 to="/admin/users"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/users") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                <Users size={20} />
-                {isSidebarOpen && <span>Usuários</span>}
-              </Link>
+                icon={<Users size={20} />}
+                label="Usuários"
+                isActive={isActive("/admin/users")}
+                isSidebarOpen={isSidebarOpen}
+              />
               
-              <Link
-                to="/admin/reports"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/reports") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                <BarChart size={20} />
-                {isSidebarOpen && <span>Relatórios</span>}
-              </Link>
-              
-              <Link
+              <NavItem
                 to="/admin/content"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/content") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                <FileText size={20} />
-                {isSidebarOpen && <span>Conteúdo</span>}
-              </Link>
+                icon={<FileText size={20} />}
+                label="Conteúdo"
+                isActive={isActive("/admin/content")}
+                isSidebarOpen={isSidebarOpen}
+              />
               
-              <Link
+              <NavItem
                 to="/admin/settings"
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                  isActive("/admin/settings") 
-                    ? "bg-primary text-white" 
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                <Settings size={20} />
-                {isSidebarOpen && <span>Configurações</span>}
-              </Link>
+                icon={<Settings size={20} />}
+                label="Configurações"
+                isActive={isActive("/admin/settings")}
+                isSidebarOpen={isSidebarOpen}
+              />
             </nav>
           </div>
         </aside>

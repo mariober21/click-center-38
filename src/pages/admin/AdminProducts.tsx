@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Search, Pencil, Trash, FileImage, ShoppingBag } from "lucide-react";
+import { Plus, Search, Pencil, Trash, FileImage, ShoppingBag, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdminLayout from "@/components/admin/AdminLayout";
 
@@ -48,9 +48,11 @@ const AdminProducts = () => {
               Cadastre, edite e exclua produtos da plataforma.
             </p>
           </div>
-          <Button className="flex items-center gap-2">
-            <Plus size={16} /> Novo Produto
-          </Button>
+          <Link to="/admin/products/add">
+            <Button className="flex items-center gap-2">
+              <Plus size={16} /> Novo Produto
+            </Button>
+          </Link>
         </div>
         
         <Card>
@@ -107,6 +109,9 @@ const AdminProducts = () => {
                         <div className="flex space-x-2">
                           <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
                             <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                            <LinkIcon className="h-4 w-4" />
                           </Button>
                           <Button 
                             size="sm"

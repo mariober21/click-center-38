@@ -20,8 +20,15 @@ import HelpCenter from "./pages/HelpCenter";
 import AdminGuard from "./components/AdminGuard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
+import AdminAddProduct from "./pages/admin/AdminAddProduct";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminMarketing from "./pages/admin/AdminMarketing";
+import AdminWallet from "./pages/admin/AdminWallet";
+import AdminPartnership from "./pages/admin/AdminPartnership";
+import AdminTools from "./pages/admin/AdminTools";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminContent from "./pages/admin/AdminContent";
 
 const queryClient = new QueryClient();
 
@@ -48,8 +55,30 @@ const App = () => (
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
           <Route path="/admin/products" element={<AdminGuard><AdminProducts /></AdminGuard>} />
+          <Route path="/admin/products/add" element={<AdminGuard><AdminAddProduct /></AdminGuard>} />
+          <Route path="/admin/products/categories" element={<AdminGuard><AdminProducts /></AdminGuard>} />
           <Route path="/admin/orders" element={<AdminGuard><AdminOrders /></AdminGuard>} />
+          <Route path="/admin/orders/refunds" element={<AdminGuard><AdminOrders /></AdminGuard>} />
+          <Route path="/admin/orders/invoices" element={<AdminGuard><AdminOrders /></AdminGuard>} />
           <Route path="/admin/users" element={<AdminGuard><AdminUsers /></AdminGuard>} />
+          <Route path="/admin/marketing" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
+          <Route path="/admin/marketing/campaigns" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
+          <Route path="/admin/marketing/email" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
+          <Route path="/admin/marketing/analytics" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
+          <Route path="/admin/wallet" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/balance" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/transactions" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/withdraw" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/partnership" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
+          <Route path="/admin/partnership/affiliates" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
+          <Route path="/admin/partnership/programs" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
+          <Route path="/admin/partnership/commissions" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
+          <Route path="/admin/tools" element={<AdminGuard><AdminTools /></AdminGuard>} />
+          <Route path="/admin/tools/seo" element={<AdminGuard><AdminTools /></AdminGuard>} />
+          <Route path="/admin/tools/analytics" element={<AdminGuard><AdminTools /></AdminGuard>} />
+          <Route path="/admin/tools/automation" element={<AdminGuard><AdminTools /></AdminGuard>} />
+          <Route path="/admin/content" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          <Route path="/admin/settings" element={<AdminGuard><AdminSettings /></AdminGuard>} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>
