@@ -159,7 +159,7 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Vídeo • Adicionado 3 dias atrás</p>
                   </div>
                 </div>
-                <Link to="/admin/content/videos/edit/1">
+                <Link to="/admin/content/videos">
                   <Button variant="ghost" size="sm">Editar</Button>
                 </Link>
               </div>

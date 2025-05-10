@@ -32,6 +32,7 @@ import AdminContent from "./pages/admin/AdminContent";
 
 // Content management pages
 import AdminBlogContent from "./pages/admin/content/AdminBlogContent";
+import AdminVideoContent from "./pages/admin/content/AdminVideoContent";
 
 const queryClient = new QueryClient();
 
@@ -86,10 +87,10 @@ const App = () => (
           <Route path="/admin/content/blog" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
           <Route path="/admin/content/blog/new" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
           <Route path="/admin/content/blog/edit/:id" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
+          <Route path="/admin/content/videos" element={<AdminGuard><AdminVideoContent /></AdminGuard>} />
           <Route path="/admin/content/pages" element={<AdminGuard><AdminContent /></AdminGuard>} />
           <Route path="/admin/content/media" element={<AdminGuard><AdminContent /></AdminGuard>} />
           <Route path="/admin/content/testimonials" element={<AdminGuard><AdminContent /></AdminGuard>} />
-          <Route path="/admin/content/videos" element={<AdminGuard><AdminContent /></AdminGuard>} />
           <Route path="/admin/content/faq" element={<AdminGuard><AdminContent /></AdminGuard>} />
           
           <Route path="/admin/settings" element={<AdminGuard><AdminSettings /></AdminGuard>} />
