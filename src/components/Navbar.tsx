@@ -12,13 +12,11 @@ const Navbar = () => {
   useEffect(() => {
     // Check if the user is logged in by retrieving their name from localStorage
     const storedUserName = localStorage.getItem("userName");
+    const storedIsAdmin = localStorage.getItem("isAdmin") === "true";
+    
     if (storedUserName) {
       setUserName(storedUserName);
-      
-      // Check if user is admin (Mário or Rosa Bernardo)
-      if (storedUserName === "Mário Bernardo" || storedUserName === "Rosa Bernardo") {
-        setIsAdmin(true);
-      }
+      setIsAdmin(storedIsAdmin);
     }
   }, []);
 
@@ -79,6 +77,12 @@ const Navbar = () => {
               <Link to="/login">
                 <Button className="flex items-center gap-1">
                   Cadastrar <ArrowRight size={16} />
+                </Button>
+              </Link>
+              <Link to="/admin-login">
+                <Button variant="link" size="sm" className="text-gray-500 flex items-center gap-1">
+                  <Shield size={14} />
+                  Admin
                 </Button>
               </Link>
             </>
@@ -148,6 +152,12 @@ const Navbar = () => {
                 <Link to="/login">
                   <Button className="w-full flex items-center justify-center gap-1">
                     Cadastrar <ArrowRight size={16} />
+                  </Button>
+                </Link>
+                <Link to="/admin-login">
+                  <Button variant="link" className="w-full flex items-center justify-center gap-1 text-gray-500">
+                    <Shield size={16} />
+                    Acesso Admin
                   </Button>
                 </Link>
               </div>
