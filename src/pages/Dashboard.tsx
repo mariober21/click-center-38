@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +8,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Dashboard = () => {
   const [userType] = useState<"student" | "instructor">("student");
+  const [userName, setUserName] = useState<string>("Usuário");
+  
+  // Get user name from localStorage
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
   
   const enrolledCourses = [
     {
@@ -60,6 +69,13 @@ const Dashboard = () => {
     }
   ];
 
+  const handleLogout = () => {
+    // Clear the user data from localStorage
+    localStorage.removeItem("userName");
+    // Redirect to home page
+    window.location.href = "/";
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -73,16 +89,14 @@ const Dashboard = () => {
             <div className="hidden md:flex items-center gap-2">
               <div className="text-right">
                 <p className="text-sm text-gray-600">Bem-vindo(a),</p>
-                <p className="font-semibold">João Silva</p>
+                <p className="font-semibold">{userName}</p>
               </div>
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
-                JS
+                {userName.substring(0, 2).toUpperCase()}
               </div>
             </div>
-            <Button variant="outline" asChild>
-              <Link to="/">
-                <ArrowLeft size={16} className="mr-2" /> Sair
-              </Link>
+            <Button variant="outline" onClick={handleLogout}>
+              <ArrowLeft size={16} className="mr-2" /> Sair
             </Button>
           </div>
         </div>

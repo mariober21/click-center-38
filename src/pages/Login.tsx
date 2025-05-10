@@ -25,10 +25,23 @@ const Login = () => {
     // Simulate login request
     setTimeout(() => {
       setIsLoading(false);
+      
+      // For demonstration purposes, we'll use a hardcoded name for login
+      // In a real app, this would come from the backend
+      const storedName = localStorage.getItem("userName");
+      if (storedName) {
+        localStorage.setItem("userName", storedName);
+      } else {
+        // If no name stored yet (first login), use email username as default name
+        const defaultName = loginEmail.split('@')[0];
+        localStorage.setItem("userName", defaultName);
+      }
+      
       toast({
         title: "Login realizado com sucesso!",
         description: "Redirecionando para o dashboard...",
       });
+      
       // In a real app, you would redirect to dashboard after successful login
       window.location.href = "/dashboard";
     }, 1500);
@@ -41,10 +54,15 @@ const Login = () => {
     // Simulate registration request
     setTimeout(() => {
       setIsLoading(false);
+      
+      // Save the user's name to localStorage
+      localStorage.setItem("userName", registerName);
+      
       toast({
         title: "Conta criada com sucesso!",
         description: "Bem-vindo(a) à plataforma EduPro!",
       });
+      
       // In a real app, you would redirect to dashboard after successful registration
       window.location.href = "/dashboard";
     }, 1500);

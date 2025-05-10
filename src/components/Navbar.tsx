@@ -1,11 +1,20 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check if the user is logged in by retrieving their name from localStorage
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
 
   return (
     <nav className="bg-white border-b border-gray-200 py-4">
@@ -25,16 +34,32 @@ const Navbar = () => {
           <Link to="#" className="text-gray-600 hover:text-primary transition-colors">
             Sobre Nós
           </Link>
-          <Link to="/login">
-            <Button variant="outline" className="mr-2">
-              Entrar
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button className="flex items-center gap-1">
-              Cadastrar <ArrowRight size={16} />
-            </Button>
-          </Link>
+          
+          {userName ? (
+            <div className="flex items-center gap-2">
+              <Link to="/dashboard">
+                <Button variant="outline" className="mr-2">
+                  Dashboard
+                </Button>
+              </Link>
+              <div className="text-primary font-medium">
+                Olá, {userName}
+              </div>
+            </div>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="outline" className="mr-2">
+                  Entrar
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button className="flex items-center gap-1">
+                  Cadastrar <ArrowRight size={16} />
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -61,18 +86,32 @@ const Navbar = () => {
             <Link to="#" className="text-gray-600 hover:text-primary transition-colors py-2">
               Sobre Nós
             </Link>
-            <div className="flex flex-col space-y-2 pt-3">
-              <Link to="/login">
-                <Button variant="outline" className="w-full">
-                  Entrar
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button className="w-full flex items-center justify-center gap-1">
-                  Cadastrar <ArrowRight size={16} />
-                </Button>
-              </Link>
-            </div>
+            
+            {userName ? (
+              <>
+                <div className="text-primary font-medium py-2">
+                  Olá, {userName}
+                </div>
+                <Link to="/dashboard">
+                  <Button className="w-full">
+                    Dashboard
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <div className="flex flex-col space-y-2 pt-3">
+                <Link to="/login">
+                  <Button variant="outline" className="w-full">
+                    Entrar
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button className="w-full flex items-center justify-center gap-1">
+                    Cadastrar <ArrowRight size={16} />
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
