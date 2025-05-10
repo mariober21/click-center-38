@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Eye, Save } from "lucide-react";
+import { ArrowLeft, Eye, Save, FileText } from "lucide-react";
 
 interface ActionButtonsProps {
   onBack: () => void;
@@ -33,12 +33,13 @@ const ActionButtons = ({ onBack, onSaveAsDraft, onPublish }: ActionButtonsProps)
           variant="outline" 
           onClick={onSaveAsDraft}
         >
-          Salvar Rascunho
+          <FileText size={16} className="mr-2" /> Salvar Rascunho
         </Button>
         
         <Button 
           type="button" 
           onClick={onPublish}
+          className="bg-primary text-white hover:bg-primary/90"
         >
           <Save size={16} className="mr-2" /> Publicar
         </Button>
