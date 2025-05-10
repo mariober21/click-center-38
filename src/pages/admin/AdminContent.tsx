@@ -131,7 +131,7 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Blog Post • Editado 2 dias atrás</p>
                   </div>
                 </div>
-                <Link to="/admin/content/blog/edit/1">
+                <Link to="/admin/content/blog">
                   <Button variant="ghost" size="sm">Editar</Button>
                 </Link>
               </div>
@@ -145,7 +145,7 @@ const AdminContent = () => {
                     <p className="text-sm text-muted-foreground">Página • Editado 1 semana atrás</p>
                   </div>
                 </div>
-                <Link to="/admin/content/pages/edit/1">
+                <Link to="/admin/content/pages">
                   <Button variant="ghost" size="sm">Editar</Button>
                 </Link>
               </div>
