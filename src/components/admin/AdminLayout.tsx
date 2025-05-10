@@ -1,3 +1,4 @@
+
 import { useState, useEffect, ReactNode } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -45,19 +46,21 @@ interface NavItemProps {
 const NavItem = ({ to, icon, label, isActive, isSidebarOpen, hasSubItems = false, isOpen = false, onClick }: NavItemProps) => (
   <Link
     to={to}
-    className={`flex items-center justify-between gap-3 px-3 py-2 rounded-md transition-colors ${
+    className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-md transition-all duration-200 ${
       isActive 
-        ? "bg-primary text-white" 
-        : "hover:bg-gray-100"
+        ? "bg-primary text-white shadow-sm" 
+        : "hover:bg-gray-100 hover:shadow-sm"
     }`}
     onClick={hasSubItems && onClick ? onClick : undefined}
   >
     <div className="flex items-center gap-3">
-      {icon}
-      {isSidebarOpen && <span>{label}</span>}
+      <div className={`${isActive ? "text-white" : "text-primary"}`}>
+        {icon}
+      </div>
+      {isSidebarOpen && <span className="font-medium">{label}</span>}
     </div>
     {hasSubItems && isSidebarOpen && (
-      isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />
+      isOpen ? <ChevronDown size={16} className={isActive ? "text-white" : ""} /> : <ChevronRight size={16} className={isActive ? "text-white" : ""} />
     )}
   </Link>
 );
@@ -90,6 +93,25 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
+  // Auto expand the section based on current route
+  useEffect(() => {
+    const path = location.pathname;
+    
+    if (path.includes("/admin/products")) {
+      setExpandedItems(prev => ({ ...prev, products: true }));
+    } else if (path.includes("/admin/marketing")) {
+      setExpandedItems(prev => ({ ...prev, marketing: true }));
+    } else if (path.includes("/admin/orders")) {
+      setExpandedItems(prev => ({ ...prev, sales: true }));
+    } else if (path.includes("/admin/partnership")) {
+      setExpandedItems(prev => ({ ...prev, partnership: true }));
+    } else if (path.includes("/admin/tools")) {
+      setExpandedItems(prev => ({ ...prev, tools: true }));
+    } else if (path.includes("/admin/wallet")) {
+      setExpandedItems(prev => ({ ...prev, wallet: true }));
+    }
+  }, [location.pathname]);
+  
   const handleLogout = () => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userRole");
@@ -111,11 +133,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-primary text-white py-4 z-10">
+      <header className="bg-primary text-white py-4 shadow-md z-10">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <button
-              className="lg:hidden p-2 rounded-md hover:bg-primary-dark"
+              className="lg:hidden p-2 rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-white/20"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
               {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
@@ -132,7 +154,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <p className="text-sm text-gray-200">Administrador</p>
                 <p className="font-semibold">{userName}</p>
               </div>
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-bold">
                 {userName.substring(0, 2).toUpperCase()}
               </div>
             </div>
@@ -150,10 +172,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             isSidebarOpen 
               ? "fixed inset-y-0 left-0 z-50 w-64 pt-16 lg:static lg:pt-0 lg:w-64"
               : "hidden lg:block lg:w-20"
-          } transition-all duration-300`}
+          } transition-all duration-300 shadow-sm`}
         >
           <div className="p-4">
-            <nav className="space-y-1">
+            <nav className="space-y-2.5">
               <NavItem
                 to="/admin"
                 icon={<LayoutDashboard size={20} />}
@@ -179,24 +201,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.products}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/products"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/products") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Todos os Produtos
                       </Link>
                       <Link
                         to="/admin/products/add"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products/add") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/products/add") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Adicionar Novo
                       </Link>
                       <Link
                         to="/admin/products/categories"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/products/categories") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/products/categories") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Categorias
                       </Link>
@@ -222,24 +244,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.marketing}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/marketing/campaigns"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/campaigns") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/marketing/campaigns") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Campanhas
                       </Link>
                       <Link
                         to="/admin/marketing/email"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/email") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/marketing/email") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Email Marketing
                       </Link>
                       <Link
                         to="/admin/marketing/analytics"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/marketing/analytics") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/marketing/analytics") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Analytics
                       </Link>
@@ -265,24 +287,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.sales}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/orders"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/orders") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Pedidos
                       </Link>
                       <Link
                         to="/admin/orders/refunds"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders/refunds") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/orders/refunds") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Reembolsos
                       </Link>
                       <Link
                         to="/admin/orders/invoices"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/orders/invoices") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/orders/invoices") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Faturas
                       </Link>
@@ -308,24 +330,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.wallet}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/wallet/balance"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/balance") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/wallet/balance") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Saldo
                       </Link>
                       <Link
                         to="/admin/wallet/transactions"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/transactions") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/wallet/transactions") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Transações
                       </Link>
                       <Link
                         to="/admin/wallet/withdraw"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/wallet/withdraw") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/wallet/withdraw") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Retiradas
                       </Link>
@@ -351,24 +373,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.partnership}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/partnership/affiliates"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/affiliates") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/partnership/affiliates") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Afiliados
                       </Link>
                       <Link
                         to="/admin/partnership/programs"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/programs") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/partnership/programs") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Programas
                       </Link>
                       <Link
                         to="/admin/partnership/commissions"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/partnership/commissions") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/partnership/commissions") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Comissões
                       </Link>
@@ -394,24 +416,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     isOpen={expandedItems.tools}
                   />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="ml-8 mt-1 space-y-1">
+                <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
                   {isSidebarOpen && (
                     <>
                       <Link
                         to="/admin/tools/seo"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/seo") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/tools/seo") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         SEO
                       </Link>
                       <Link
                         to="/admin/tools/analytics"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/analytics") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/tools/analytics") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Analytics
                       </Link>
                       <Link
                         to="/admin/tools/automation"
-                        className={`block py-2 px-3 rounded-md ${isActive("/admin/tools/automation") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"}`}
+                        className={`block py-2 px-3 rounded-md transition-colors ${isActive("/admin/tools/automation") ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
                       >
                         Automações
                       </Link>
