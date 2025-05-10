@@ -31,14 +31,23 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link to="/courses" className="text-gray-600 hover:text-primary transition-colors">
-            Cursos
+          <Link to="/members" className="text-gray-600 hover:text-primary transition-colors">
+            Área de membros
           </Link>
-          <Link to="#" className="text-gray-600 hover:text-primary transition-colors">
-            Para Professores
+          <Link to="/whats-included" className="text-gray-600 hover:text-primary transition-colors">
+            O que está incluído?
           </Link>
-          <Link to="#" className="text-gray-600 hover:text-primary transition-colors">
-            Sobre Nós
+          <Link to="/academy" className="text-gray-600 hover:text-primary transition-colors">
+            Academia
+          </Link>
+          <Link to="/resources" className="text-gray-600 hover:text-primary transition-colors">
+            Recursos
+          </Link>
+          <Link to="/marketplace" className="text-gray-600 hover:text-primary transition-colors">
+            Marketplace
+          </Link>
+          <Link to="/help-center" className="text-gray-600 hover:text-primary transition-colors">
+            Central de Ajuda
           </Link>
           
           {userName ? (
@@ -91,14 +100,23 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white px-4 pt-2 pb-4 shadow-lg">
           <div className="flex flex-col space-y-3">
-            <Link to="/courses" className="text-gray-600 hover:text-primary transition-colors py-2">
-              Cursos
+            <Link to="/members" className="text-gray-600 hover:text-primary transition-colors py-2">
+              Área de membros
             </Link>
-            <Link to="#" className="text-gray-600 hover:text-primary transition-colors py-2">
-              Para Professores
+            <Link to="/whats-included" className="text-gray-600 hover:text-primary transition-colors py-2">
+              O que está incluído?
             </Link>
-            <Link to="#" className="text-gray-600 hover:text-primary transition-colors py-2">
-              Sobre Nós
+            <Link to="/academy" className="text-gray-600 hover:text-primary transition-colors py-2">
+              Academia
+            </Link>
+            <Link to="/resources" className="text-gray-600 hover:text-primary transition-colors py-2">
+              Recursos
+            </Link>
+            <Link to="/marketplace" className="text-gray-600 hover:text-primary transition-colors py-2">
+              Marketplace
+            </Link>
+            <Link to="/help-center" className="text-gray-600 hover:text-primary transition-colors py-2">
+              Central de Ajuda
             </Link>
             
             {userName ? (
