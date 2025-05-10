@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -41,10 +40,14 @@ interface FilePreview {
   url: string;
 }
 
-const ProductForm = () => {
+interface ProductFormProps {
+  activeTab?: string;
+}
+
+const ProductForm = ({ activeTab: initialTab }: ProductFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("basic");
+  const [activeTab, setActiveTab] = useState(initialTab || "basic");
   
   // Form state
   const [title, setTitle] = useState("");
@@ -125,7 +128,25 @@ const ProductForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // In a real app, you would upload the files and save the product data
+    // Here's where we would send data to a database
+    // Currently just shows a toast message
+    console.log("Product data to be saved:", {
+      title,
+      description,
+      price,
+      comparePrice,
+      productType,
+      status,
+      images: images.length,
+      videos: videos.length,
+      files: files.length,
+      metaTitle,
+      metaDescription,
+      slug,
+      isSubscription,
+      subscriptionInterval
+    });
+    
     toast({
       title: "Produto salvo",
       description: status === "published" 
@@ -135,6 +156,20 @@ const ProductForm = () => {
     
     navigate("/admin/products");
   };
+  
+  // Map between parent component's tab values and this component's tab values
+  const mapExternalTabToInternal = () => {
+    switch(initialTab) {
+      case "info": return "basic";
+      case "media": return "media";
+      case "pricing": return "pricing";
+      case "seo": return "seo";
+      default: return "basic";
+    }
+  };
+  
+  // Use the right active tab based on parent or internal state
+  const effectiveTab = initialTab ? mapExternalTabToInternal() : activeTab;
   
   return (
     <form onSubmit={handleSubmit}>
@@ -179,7 +214,7 @@ const ProductForm = () => {
         </div>
       </div>
       
-      <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+      <Tabs defaultValue={effectiveTab} onValueChange={setActiveTab} value={effectiveTab}>
         <TabsList className="mb-6">
           <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
           <TabsTrigger value="media">Mídia</TabsTrigger>

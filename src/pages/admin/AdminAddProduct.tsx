@@ -5,7 +5,7 @@ import ProductForm from "@/components/admin/ProductForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Info, 
-  ImageIcon, 
+  ImagePlus, 
   DollarSign, 
   BarChart, 
   Boxes 
@@ -35,7 +35,7 @@ const AdminAddProduct = () => {
                 <span className="hidden sm:inline">Informações</span>
               </TabsTrigger>
               <TabsTrigger value="media" className="flex gap-2 items-center">
-                <ImageIcon size={16} />
+                <ImagePlus size={16} />
                 <span className="hidden sm:inline">Mídia</span>
               </TabsTrigger>
               <TabsTrigger value="pricing" className="flex gap-2 items-center">
