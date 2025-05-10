@@ -1,7 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { type FilePreview } from "@/hooks/useProductForm";
 
 interface ProductFormSubmitProps {
   onSubmit: (e: React.FormEvent) => void;
@@ -29,7 +28,7 @@ const ProductFormSubmit = ({
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="w-full">
       {children}
     </form>
   );
