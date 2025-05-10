@@ -11,6 +11,9 @@ const Footer = () => {
             <p className="text-gray-600 mb-4">
               Crie, gerencie e venda seus cursos com facilidade. Nossa plataforma oferece todas as ferramentas necessárias para seu sucesso como educador online.
             </p>
+            <p className="text-gray-600">
+              Criado por Mário Bernardo e Rosa Bernardo
+            </p>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Navegação</h3>
