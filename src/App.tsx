@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -73,10 +74,15 @@ const App = () => (
           <Route path="/admin/marketing/campaigns" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
           <Route path="/admin/marketing/email" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
           <Route path="/admin/marketing/analytics" element={<AdminGuard><AdminMarketing /></AdminGuard>} />
+          
+          {/* Wallet Routes */}
           <Route path="/admin/wallet" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           <Route path="/admin/wallet/balance" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           <Route path="/admin/wallet/transactions" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           <Route path="/admin/wallet/withdraw" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/monthly" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/advance" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          
           <Route path="/admin/partnership" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
           <Route path="/admin/partnership/affiliates" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
           <Route path="/admin/partnership/programs" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
