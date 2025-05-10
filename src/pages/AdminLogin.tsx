@@ -71,7 +71,8 @@ const AdminLogin = () => {
   // In a real app, this would be authenticated against a secure backend
   const validAdmins = [
     { email: "mario@exemplo.com", password: "admin123", name: "Mário Bernardo" },
-    { email: "rosa@exemplo.com", password: "admin123", name: "Rosa Bernardo" }
+    { email: "rosa@exemplo.com", password: "admin123", name: "Rosa Bernardo" },
+    { email: "sweetwish493@gmail.com", password: "123456", name: "Admin Sweet" }
   ];
 
   const handleLogin = (data: z.infer<typeof loginSchema>) => {
