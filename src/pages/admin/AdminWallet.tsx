@@ -2,7 +2,7 @@
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { DollarSign, CreditCard, ArrowUpRight, Wallet, ArrowDownLeft } from "lucide-react";
 
 const AdminWallet = () => {
@@ -25,8 +25,12 @@ const AdminWallet = () => {
                   <p className="text-4xl font-bold">R$ 2.547,85</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <Button>Sacar Fundos</Button>
-                  <Button variant="outline">Histórico de Pagamentos</Button>
+                  <Link to="/admin/wallet/withdraw">
+                    <Button className="w-full">Sacar Fundos</Button>
+                  </Link>
+                  <Link to="/admin/wallet/transactions">
+                    <Button variant="outline" className="w-full">Histórico de Pagamentos</Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -80,6 +84,9 @@ const AdminWallet = () => {
                   <p className="font-semibold text-red-600">-R$ 500,00</p>
                 </div>
               </div>
+              <Link to="/admin/wallet">
+                <Button variant="outline" className="w-full mt-4">Voltar para Carteira</Button>
+              </Link>
             </CardContent>
           </Card>
         </>
@@ -106,6 +113,9 @@ const AdminWallet = () => {
                   </div>
                 </div>
                 <Button className="w-full">Solicitar Saque</Button>
+                <Link to="/admin/wallet">
+                  <Button variant="outline" className="w-full">Cancelar</Button>
+                </Link>
               </div>
             </CardContent>
           </Card>
@@ -126,7 +136,9 @@ const AdminWallet = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">R$ 2.547,85</p>
-                <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
+                <Link to="/admin/wallet/balance">
+                  <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
+                </Link>
               </CardContent>
             </Card>
             
@@ -200,7 +212,9 @@ const AdminWallet = () => {
                   <p className="font-semibold text-red-600">-R$ 500,00</p>
                 </div>
               </div>
-              <Button variant="outline" className="w-full mt-4">Ver Todas as Transações</Button>
+              <Link to="/admin/wallet/transactions">
+                <Button variant="outline" className="w-full mt-4">Ver Todas as Transações</Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

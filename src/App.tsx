@@ -29,6 +29,7 @@ import AdminPartnership from "./pages/admin/AdminPartnership";
 import AdminTools from "./pages/admin/AdminTools";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminContent from "./pages/admin/AdminContent";
+import AdminSales from "./pages/admin/AdminSales";
 
 // Content management pages
 import AdminBlogContent from "./pages/admin/content/AdminBlogContent";
@@ -86,6 +87,14 @@ const App = () => (
           <Route path="/admin/tools/analytics" element={<AdminGuard><AdminTools /></AdminGuard>} />
           <Route path="/admin/tools/automation" element={<AdminGuard><AdminTools /></AdminGuard>} />
           <Route path="/admin/content" element={<AdminGuard><AdminContent /></AdminGuard>} />
+          
+          {/* Sales Routes */}
+          <Route path="/admin/sales" element={<AdminGuard><AdminSales /></AdminGuard>} />
+          <Route path="/admin/sales/balance" element={<AdminGuard><AdminSales /></AdminGuard>} />
+          <Route path="/admin/sales/statement" element={<AdminGuard><AdminSales /></AdminGuard>} />
+          <Route path="/admin/sales/monthly" element={<AdminGuard><AdminSales /></AdminGuard>} />
+          <Route path="/admin/sales/withdraw" element={<AdminGuard><AdminSales /></AdminGuard>} />
+          <Route path="/admin/sales/advance" element={<AdminGuard><AdminSales /></AdminGuard>} />
           
           {/* Content Management Routes */}
           <Route path="/admin/content/blog" element={<AdminGuard><AdminBlogContent /></AdminGuard>} />
