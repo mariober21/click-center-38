@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Wallet } from "lucide-react";
+import { Wallet, CreditCard } from "lucide-react";
 
 const WalletBalance = () => {
   return (
@@ -18,12 +18,18 @@ const WalletBalance = () => {
               <p className="text-sm font-medium text-muted-foreground">Saldo Disponível</p>
               <p className="text-4xl font-bold">€ 2.547,85</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <Link to="/admin/wallet/withdraw">
                 <Button className="w-full">Sacar Fundos</Button>
               </Link>
               <Link to="/admin/wallet/transactions">
                 <Button variant="outline" className="w-full">Histórico de Pagamentos</Button>
+              </Link>
+              <Link to="/admin/wallet/payments">
+                <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                  <CreditCard size={16} />
+                  Pagamento
+                </Button>
               </Link>
             </div>
           </CardContent>

@@ -6,6 +6,7 @@ import WalletBalance from "@/components/admin/wallet/WalletBalance";
 import WalletTransactions from "@/components/admin/wallet/WalletTransactions";
 import WalletWithdraw from "@/components/admin/wallet/WalletWithdraw";
 import SalesPayments from "@/components/admin/sales/SalesPayments";
+import AdminGuard from "@/components/AdminGuard";
 
 const AdminWallet = () => {
   const location = useLocation();
@@ -26,9 +27,11 @@ const AdminWallet = () => {
   };
 
   return (
-    <AdminLayout>
-      {renderContent()}
-    </AdminLayout>
+    <AdminGuard>
+      <AdminLayout>
+        {renderContent()}
+      </AdminLayout>
+    </AdminGuard>
   );
 };
 
