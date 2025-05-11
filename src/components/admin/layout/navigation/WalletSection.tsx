@@ -12,7 +12,8 @@ const WalletSection = ({ isSidebarOpen, expandedItems, toggleSection }: WalletSe
   const links = [
     { path: "/admin/wallet/balance", label: "Saldo" },
     { path: "/admin/wallet/transactions", label: "Transações" },
-    { path: "/admin/wallet/withdraw", label: "Retiradas" }
+    { path: "/admin/wallet/withdraw", label: "Retiradas" },
+    { path: "/admin/wallet/payments", label: "Pagamentos" }
   ];
 
   return (

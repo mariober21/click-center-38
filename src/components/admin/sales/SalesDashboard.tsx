@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Wallet, FileText, BarChart3, ArrowDown, ArrowUp } from "lucide-react";
+import { Wallet, FileText, BarChart3, ArrowDown, ArrowUp, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SalesDashboard = () => {
@@ -24,7 +24,7 @@ const SalesDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">R$ 8.750,35</p>
+            <p className="text-2xl font-bold">€ 8.750,35</p>
             <p className="text-xs text-muted-foreground">Atualizado hoje</p>
             <Link to={`${routeBase}/balance`}>
               <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
@@ -56,7 +56,7 @@ const SalesDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">R$ 3.450,00</p>
+            <p className="text-2xl font-bold">€ 3.450,00</p>
             <p className="text-xs text-green-600">+22% desde o mês anterior</p>
             <Link to={`${routeBase}/monthly`}>
               <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
@@ -65,7 +65,7 @@ const SalesDashboard = () => {
         </Card>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -79,6 +79,23 @@ const SalesDashboard = () => {
             </p>
             <Link to={`${routeBase}/withdraw`}>
               <Button>Solicitar Saque</Button>
+            </Link>
+          </CardContent>
+        </Card>
+        
+        <Card className="hover:shadow-md transition-shadow">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CreditCard size={18} className="text-primary" />
+              Pagamentos
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">
+              Realize pagamentos seguros usando sua carteira digital.
+            </p>
+            <Link to={`${routeBase}/payments`}>
+              <Button>Realizar Pagamento</Button>
             </Link>
           </CardContent>
         </Card>

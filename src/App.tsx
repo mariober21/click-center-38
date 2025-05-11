@@ -82,6 +82,7 @@ const App = () => (
           <Route path="/admin/wallet/withdraw" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           <Route path="/admin/wallet/monthly" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           <Route path="/admin/wallet/advance" element={<AdminGuard><AdminWallet /></AdminGuard>} />
+          <Route path="/admin/wallet/payments" element={<AdminGuard><AdminWallet /></AdminGuard>} />
           
           <Route path="/admin/partnership" element={<AdminGuard><AdminPartnership /></AdminGuard>} />
           <Route path="/admin/partnership/affiliates" element={<AdminGuard><AdminPartnership /></AdminGuard>} />

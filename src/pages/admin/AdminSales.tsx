@@ -7,6 +7,7 @@ import SalesStatement from "@/components/admin/sales/SalesStatement";
 import SalesMonthly from "@/components/admin/sales/SalesMonthly";
 import SalesWithdraw from "@/components/admin/sales/SalesWithdraw";
 import SalesAdvance from "@/components/admin/sales/SalesAdvance";
+import SalesPayments from "@/components/admin/sales/SalesPayments";
 import { useEffect } from "react";
 
 const AdminSales = () => {
@@ -30,6 +31,8 @@ const AdminSales = () => {
       return <SalesWithdraw />;
     } else if (currentPath === "/admin/sales/advance" || currentPath === "/admin/wallet/advance") {
       return <SalesAdvance />;
+    } else if (currentPath === "/admin/wallet/payments" || currentPath === "/admin/sales/payments") {
+      return <SalesPayments />;
     } else {
       return <SalesDashboard />;
     }

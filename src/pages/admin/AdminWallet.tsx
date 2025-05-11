@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLocation, Link } from "react-router-dom";
 import { DollarSign, CreditCard, ArrowUpRight, Wallet, ArrowDownLeft } from "lucide-react";
+import SalesPayments from "@/components/admin/sales/SalesPayments";
 
 const AdminWallet = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ const AdminWallet = () => {
               <CardContent>
                 <div className="py-4 text-center">
                   <p className="text-sm font-medium text-muted-foreground">Saldo Disponível</p>
-                  <p className="text-4xl font-bold">R$ 2.547,85</p>
+                  <p className="text-4xl font-bold">€ 2.547,85</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <Link to="/admin/wallet/withdraw">
@@ -57,7 +58,7 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">10/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-green-600">+R$ 297,00</p>
+                  <p className="font-semibold text-green-600">+€ 297,00</p>
                 </div>
                 <div className="flex items-center justify-between p-4 border-b">
                   <div className="flex items-center gap-3">
@@ -69,7 +70,7 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">09/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-green-600">+R$ 85,50</p>
+                  <p className="font-semibold text-green-600">+€ 85,50</p>
                 </div>
                 <div className="flex items-center justify-between p-4 border-b">
                   <div className="flex items-center gap-3">
@@ -81,7 +82,7 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">05/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-red-600">-R$ 500,00</p>
+                  <p className="font-semibold text-red-600">-€ 500,00</p>
                 </div>
               </div>
               <Link to="/admin/wallet">
@@ -103,12 +104,12 @@ const AdminWallet = () => {
               <div className="space-y-4">
                 <div className="text-center py-4">
                   <p className="text-sm font-medium text-muted-foreground">Saldo Disponível para Saque</p>
-                  <p className="text-3xl font-bold">R$ 2.547,85</p>
+                  <p className="text-3xl font-bold">€ 2.547,85</p>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Valor do Saque</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2">R$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2">€</span>
                     <input type="text" className="w-full pl-8 pr-4 py-2 border rounded-md" placeholder="0,00" />
                   </div>
                 </div>
@@ -121,6 +122,8 @@ const AdminWallet = () => {
           </Card>
         </>
       );
+    } else if (currentPath === "/admin/wallet/payments") {
+      return <SalesPayments />;
     } else {
       return (
         <div className="space-y-6">
@@ -135,7 +138,7 @@ const AdminWallet = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">R$ 2.547,85</p>
+                <p className="text-2xl font-bold">€ 2.547,85</p>
                 <Link to="/admin/wallet/balance">
                   <Button variant="link" className="p-0 h-auto mt-2">Ver Detalhes</Button>
                 </Link>
@@ -150,7 +153,7 @@ const AdminWallet = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">R$ 1.250,00</p>
+                <p className="text-2xl font-bold">€ 1.250,00</p>
                 <p className="text-xs text-muted-foreground">+32% desde o mês passado</p>
               </CardContent>
             </Card>
@@ -163,7 +166,7 @@ const AdminWallet = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">R$ 500,00</p>
+                <p className="text-2xl font-bold">€ 500,00</p>
                 <p className="text-xs text-muted-foreground">05/05/2025</p>
               </CardContent>
             </Card>
@@ -185,7 +188,7 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">10/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-green-600">+R$ 297,00</p>
+                  <p className="font-semibold text-green-600">+€ 297,00</p>
                 </div>
                 <div className="flex items-center justify-between p-4 border-b">
                   <div className="flex items-center gap-3">
@@ -197,7 +200,7 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">09/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-green-600">+R$ 85,50</p>
+                  <p className="font-semibold text-green-600">+€ 85,50</p>
                 </div>
                 <div className="flex items-center justify-between p-4">
                   <div className="flex items-center gap-3">
@@ -209,12 +212,17 @@ const AdminWallet = () => {
                       <p className="text-sm text-muted-foreground">05/05/2025</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-red-600">-R$ 500,00</p>
+                  <p className="font-semibold text-red-600">-€ 500,00</p>
                 </div>
               </div>
-              <Link to="/admin/wallet/transactions">
-                <Button variant="outline" className="w-full mt-4">Ver Todas as Transações</Button>
-              </Link>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <Link to="/admin/wallet/transactions">
+                  <Button variant="outline" className="w-full">Ver Todas as Transações</Button>
+                </Link>
+                <Link to="/admin/wallet/payments">
+                  <Button className="w-full">Realizar Pagamento</Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </div>
