@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, FileText, Settings } from "lucide-react";
@@ -59,7 +60,7 @@ const SidebarNavigation = ({ isSidebarOpen }: SidebarNavigationProps) => {
       <nav className="space-y-2.5">
         {/* Dashboard */}
         <StandardNavItem
-          title="Dashboard"
+          title="ClickCenter"
           path="/admin"
           icon={LayoutDashboard}
           isSidebarOpen={isSidebarOpen}
