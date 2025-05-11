@@ -1,121 +1,144 @@
-
-import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckCircle, RefreshCw, WrenchIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, AlertCircle, XCircle, RefreshCw } from "lucide-react";
+import { useState, useEffect } from "react";
 import { adminSystemService, AdminSectionKey } from "@/services/AdminSystemService";
+import { toast } from "@/hooks/use-toast";
 
 const SystemStatusPanel = () => {
-  const [sectionStatus, setSectionStatus] = useState<Record<AdminSectionKey, boolean>>(
-    adminSystemService.getAllSectionsStatus()
-  );
-  const [checking, setChecking] = useState(false);
-  const [lastChecked, setLastChecked] = useState<Date | null>(adminSystemService.getLastCheckTime());
+  const [systemStatus, setSystemStatus] = useState<Record<AdminSectionKey, boolean>>({
+    dashboard: true,
+    products: true,
+    marketing: false,
+    sales: true,
+    partnership: true,
+    tools: true,
+    wallet: true,
+    users: true,
+    content: true,
+    settings: true
+  });
   
-  const checkAllSystems = () => {
-    setChecking(true);
-    // Simulate an actual check that takes time
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  
+  // Get initial system status
+  useEffect(() => {
+    const status: Record<AdminSectionKey, boolean> = {} as Record<AdminSectionKey, boolean>;
+    
+    Object.keys(adminSystemService.getSectionStatuses()).forEach((key) => {
+      const sectionKey = key as AdminSectionKey;
+      status[sectionKey] = adminSystemService.getSectionStatus(sectionKey);
+    });
+    
+    setSystemStatus(status);
+  }, []);
+  
+  const refreshStatus = () => {
+    setIsRefreshing(true);
+    
+    // Simulate API call
     setTimeout(() => {
-      const status = adminSystemService.checkAllSections();
-      setSectionStatus(status);
-      setLastChecked(adminSystemService.getLastCheckTime());
-      setChecking(false);
+      const status: Record<AdminSectionKey, boolean> = {} as Record<AdminSectionKey, boolean>;
+      
+      Object.keys(adminSystemService.getSectionStatuses()).forEach((key) => {
+        const sectionKey = key as AdminSectionKey;
+        status[sectionKey] = adminSystemService.getSectionStatus(sectionKey);
+      });
+      
+      setSystemStatus(status);
+      setIsRefreshing(false);
+      
+      toast({
+        title: "Status atualizado",
+        description: "O status do sistema foi atualizado com sucesso."
+      });
     }, 1000);
   };
   
-  const handleFixSection = (section: AdminSectionKey) => {
+  const fixSection = (section: AdminSectionKey) => {
     adminSystemService.fixSection(section);
-    setSectionStatus(adminSystemService.getAllSectionsStatus());
+    
+    setSystemStatus(prev => ({
+      ...prev,
+      [section]: true
+    }));
+    
+    toast({
+      title: "Seção reparada",
+      description: `A seção ${section} foi reparada com sucesso.`
+    });
   };
   
-  const handleFixAllSections = () => {
-    adminSystemService.fixAllSections();
-    setSectionStatus(adminSystemService.getAllSectionsStatus());
+  const getStatusCount = () => {
+    const total = Object.keys(systemStatus).length;
+    const working = Object.values(systemStatus).filter(status => status).length;
+    return { working, total };
   };
   
-  // Translations for section names
-  const sectionNames: Record<AdminSectionKey, string> = {
-    vendas: "Vendas",
-    marketing: "Marketing",
-    carteira: "Carteira",
-    usuarios: "Usuários",
-    parcerias: "Parcerias",
-    produtos: "Produtos"
-  };
-  
-  // Check if any sections have problems
-  const hasProblems = Object.values(sectionStatus).some(status => !status);
+  const { working, total } = getStatusCount();
   
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-center">
-          <CardTitle className="text-lg font-medium flex items-center gap-2">
-            Status do Sistema Administrativo
-          </CardTitle>
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={checkAllSystems}
-            disabled={checking}
-            className="flex items-center gap-1"
-          >
-            <RefreshCw size={16} className={checking ? "animate-spin" : ""} />
-            {checking ? "Verificando..." : "Verificar Status"}
-          </Button>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          {lastChecked 
-            ? `Última verificação: ${lastChecked.toLocaleString()}` 
-            : "Sistema não verificado"}
-        </p>
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <CardTitle className="text-md font-medium">Status do Sistema</CardTitle>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="h-8 gap-1"
+          onClick={refreshStatus}
+          disabled={isRefreshing}
+        >
+          <RefreshCw size={14} className={isRefreshing ? "animate-spin" : ""} />
+          Atualizar
+        </Button>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {Object.entries(sectionStatus).map(([section, isWorking]) => (
-              <div 
-                key={section}
-                className="flex justify-between items-center p-3 rounded-md border"
-              >
-                <div className="flex items-center gap-2">
-                  {isWorking ? (
-                    <CheckCircle size={18} className="text-green-500" />
-                  ) : (
-                    <AlertTriangle size={18} className="text-amber-500" />
-                  )}
-                  <span>{sectionNames[section as AdminSectionKey]}</span>
-                </div>
-                <div>
-                  {isWorking ? (
-                    <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200">
-                      Funcionando
-                    </Badge>
-                  ) : (
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => handleFixSection(section as AdminSectionKey)}
-                      className="text-amber-600 hover:text-amber-700 hover:bg-amber-50"
-                    >
-                      Corrigir
-                    </Button>
-                  )}
-                </div>
-              </div>
-            ))}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-sm text-muted-foreground">Status geral</p>
+            <p className="font-medium">
+              {working === total ? (
+                <span className="text-green-600 flex items-center gap-1">
+                  <CheckCircle size={16} /> Todos os sistemas operacionais
+                </span>
+              ) : (
+                <span className="text-amber-600 flex items-center gap-1">
+                  <AlertCircle size={16} /> {working} de {total} sistemas operacionais
+                </span>
+              )}
+            </p>
           </div>
-          
-          {hasProblems && (
-            <Button 
-              onClick={handleFixAllSections}
-              className="w-full mt-4 flex items-center gap-2"
-            >
-              <WrenchIcon size={16} />
-              Corrigir Todos os Problemas
-            </Button>
-          )}
+          <div>
+            <Badge variant={working === total ? "default" : "outline"} className="bg-green-100 text-green-800 hover:bg-green-100">
+              {working}/{total} Online
+            </Badge>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          {Object.entries(systemStatus).map(([section, status]) => (
+            <div key={section} className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0">
+              <div className="flex items-center gap-2">
+                {status ? (
+                  <CheckCircle size={16} className="text-green-500" />
+                ) : (
+                  <XCircle size={16} className="text-red-500" />
+                )}
+                <span className="capitalize">{section}</span>
+              </div>
+              {!status && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => fixSection(section as AdminSectionKey)}
+                  className="h-7 text-xs"
+                >
+                  Reparar
+                </Button>
+              )}
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>

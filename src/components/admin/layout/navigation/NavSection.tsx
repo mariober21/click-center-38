@@ -8,6 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from "@/components/ui/collapsible";
+import { adminSystemService } from "@/services/AdminSystemService";
 
 export interface NavLink {
   path: string;
@@ -38,9 +39,23 @@ const NavSection = ({
   const location = useLocation();
   const isActive = location.pathname.includes(basePath);
   const isExpanded = expandedItems[sectionKey];
+  const [errorState, setErrorState] = useState(false);
 
   const isLinkActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  // Verificar status da seção
+  const sectionStatus = adminSystemService.getSectionStatus(sectionKey);
+  
+  // Handler para clicar em um link
+  const handleLinkClick = (e: React.MouseEvent, path: string) => {
+    if (!sectionStatus) {
+      e.preventDefault();
+      adminSystemService.fixSection(sectionKey);
+      setErrorState(false);
+      toggleSection(sectionKey);
+    }
   };
 
   const Icon = icon;
@@ -54,12 +69,13 @@ const NavSection = ({
       <CollapsibleTrigger className="w-full">
         <NavItem
           to="#"
-          icon={<Icon size={20} />}
+          icon={<Icon size={20} className={!sectionStatus ? "text-red-500" : ""} />}
           label={title}
           isActive={isActive}
           isSidebarOpen={isSidebarOpen}
           hasSubItems={true}
           isOpen={isExpanded}
+          status={sectionStatus ? "active" : "error"}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="ml-8 mt-1.5 space-y-1.5 overflow-hidden">
@@ -70,6 +86,7 @@ const NavSection = ({
                 key={link.path}
                 to={link.path}
                 className={`block py-2 px-3 rounded-md transition-colors ${isLinkActive(link.path) ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
+                onClick={(e) => handleLinkClick(e, link.path)}
               >
                 {link.label}
               </Link>

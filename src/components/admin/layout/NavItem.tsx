@@ -1,7 +1,9 @@
 
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, AlertCircle } from "lucide-react";
+
+type StatusType = "active" | "error" | "warning" | "inactive";
 
 interface NavItemProps {
   to: string;
@@ -12,6 +14,7 @@ interface NavItemProps {
   hasSubItems?: boolean;
   isOpen?: boolean;
   onClick?: () => void;
+  status?: StatusType;
 }
 
 const NavItem = ({ 
@@ -22,27 +25,45 @@ const NavItem = ({
   isSidebarOpen, 
   hasSubItems = false, 
   isOpen = false, 
-  onClick 
-}: NavItemProps) => (
-  <Link
-    to={to}
-    className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-md transition-all duration-200 ${
-      isActive 
-        ? "bg-primary text-white shadow-sm" 
-        : "hover:bg-gray-100 hover:shadow-sm"
-    }`}
-    onClick={hasSubItems && onClick ? onClick : undefined}
-  >
-    <div className="flex items-center gap-3">
-      <div className={`${isActive ? "text-white" : "text-primary"}`}>
-        {icon}
+  onClick,
+  status = "active"
+}: NavItemProps) => {
+  // Determinar a cor do ícone com base no status
+  const getStatusIndicator = () => {
+    if (status === "error") {
+      return <AlertCircle size={14} className="text-red-500" />;
+    }
+    return null;
+  };
+
+  return (
+    <Link
+      to={to}
+      className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-md transition-all duration-200 ${
+        isActive 
+          ? "bg-primary text-white shadow-sm" 
+          : status === "error" 
+            ? "bg-red-50 hover:bg-red-100 hover:shadow-sm" 
+            : "hover:bg-gray-100 hover:shadow-sm"
+      }`}
+      onClick={hasSubItems && onClick ? onClick : undefined}
+    >
+      <div className="flex items-center gap-3">
+        <div className={`${isActive ? "text-white" : status === "error" ? "text-red-500" : "text-primary"}`}>
+          {icon}
+        </div>
+        {isSidebarOpen && (
+          <div className="flex items-center gap-2">
+            <span className="font-medium">{label}</span>
+            {getStatusIndicator()}
+          </div>
+        )}
       </div>
-      {isSidebarOpen && <span className="font-medium">{label}</span>}
-    </div>
-    {hasSubItems && isSidebarOpen && (
-      isOpen ? <ChevronDown size={16} className={isActive ? "text-white" : ""} /> : <ChevronRight size={16} className={isActive ? "text-white" : ""} />
-    )}
-  </Link>
-);
+      {hasSubItems && isSidebarOpen && (
+        isOpen ? <ChevronDown size={16} className={isActive ? "text-white" : ""} /> : <ChevronRight size={16} className={isActive ? "text-white" : ""} />
+      )}
+    </Link>
+  );
+};
 
 export default NavItem;
