@@ -6,7 +6,6 @@ import RecentActivities from "@/components/admin/dashboard/RecentActivities";
 import CourseManagementCards from "@/components/admin/dashboard/CourseManagementCards";
 import RevenueChart from "@/components/admin/dashboard/RevenueChart";
 import SalesPlatform from "@/components/admin/sales/SalesPlatform";
-import PythonCodeDisplay from "@/components/admin/dashboard/PythonCodeDisplay";
 
 const mockStats = {
   totalUsers: 1235,
@@ -32,9 +31,6 @@ const AdminDashboard = () => {
         </div>
         
         <CourseManagementCards />
-        
-        {/* Python code display */}
-        <PythonCodeDisplay />
         
         {/* Plataforma de vendas */}
         <SalesPlatform />
