@@ -14,12 +14,12 @@ const SalesWithdraw = () => {
           <div className="space-y-4">
             <div className="text-center py-4">
               <p className="text-sm font-medium text-muted-foreground">Saldo Disponível para Saque</p>
-              <p className="text-3xl font-bold">R$ 8.750,35</p>
+              <p className="text-3xl font-bold">€ 8.750,35</p>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Valor do Saque</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2">R$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2">€</span>
                 <input type="text" className="w-full pl-8 pr-4 py-2 border rounded-md" placeholder="0,00" />
               </div>
             </div>

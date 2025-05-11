@@ -111,7 +111,7 @@ const StatsOverview = ({ stats }: { stats: StatsProps }) => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            R$ {stats.totalRevenue.toLocaleString('pt-BR')}
+            € {stats.totalRevenue.toLocaleString('de-DE')}
           </div>
           <div className="flex items-center mt-1">
             <span className="text-xs inline-flex items-center text-green-600 bg-green-100 px-1.5 py-0.5 rounded-full">

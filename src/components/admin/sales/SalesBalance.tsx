@@ -27,7 +27,7 @@ const SalesBalance = () => {
         <CardContent>
           <div className="py-4 text-center">
             <p className="text-sm font-medium text-muted-foreground">Saldo Total</p>
-            <p className="text-4xl font-bold">R$ 8.750,35</p>
+            <p className="text-4xl font-bold">€ 8.750,35</p>
             <p className="text-sm text-green-600">+12% desde o último mês</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -45,7 +45,7 @@ const SalesBalance = () => {
                 <CardTitle className="text-sm">Valor Médio</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">R$ 186,18</p>
+                <p className="text-2xl font-bold">€ 186,18</p>
                 <p className="text-xs text-muted-foreground">Por venda</p>
               </CardContent>
             </Card>

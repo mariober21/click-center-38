@@ -23,7 +23,7 @@ const SalesStatement = () => {
                   <p className="text-sm text-muted-foreground">10/05/2025</p>
                 </div>
               </div>
-              <p className="font-semibold text-green-600">+R$ 297,00</p>
+              <p className="font-semibold text-green-600">+€ 297,00</p>
             </div>
             <div className="flex items-center justify-between p-4 border-b">
               <div className="flex items-center gap-3">
@@ -35,7 +35,7 @@ const SalesStatement = () => {
                   <p className="text-sm text-muted-foreground">09/05/2025</p>
                 </div>
               </div>
-              <p className="font-semibold text-green-600">+R$ 47,00</p>
+              <p className="font-semibold text-green-600">+€ 47,00</p>
             </div>
             <div className="flex items-center justify-between p-4 border-b">
               <div className="flex items-center gap-3">
@@ -47,7 +47,7 @@ const SalesStatement = () => {
                   <p className="text-sm text-muted-foreground">05/05/2025</p>
                 </div>
               </div>
-              <p className="font-semibold text-red-600">-R$ 450,00</p>
+              <p className="font-semibold text-red-600">-€ 450,00</p>
             </div>
           </div>
           <Button variant="outline" className="w-full mt-4">Carregar Mais Transações</Button>

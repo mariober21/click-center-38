@@ -19,7 +19,7 @@ const RevenueChart = ({ totalRevenue }: RevenueChartProps) => {
       </CardHeader>
       <CardContent>
         <div className="text-xl font-bold mt-2">
-          R$ {totalRevenue.toLocaleString('pt-BR')}
+          € {totalRevenue.toLocaleString('de-DE')}
         </div>
         <div className="text-sm text-muted-foreground">
           De 1 Mai a 31 Mai, 2025

@@ -14,7 +14,7 @@ const SalesAdvance = () => {
           <div className="space-y-4">
             <div className="text-center py-4">
               <p className="text-sm font-medium text-muted-foreground">Valor Disponível para Antecipação</p>
-              <p className="text-3xl font-bold">R$ 4.320,00</p>
+              <p className="text-3xl font-bold">€ 4.320,00</p>
             </div>
             <Card className="bg-gray-50 border-none">
               <CardContent className="p-4">
@@ -23,7 +23,7 @@ const SalesAdvance = () => {
                     <p className="font-medium">Venda 12/06/2025</p>
                     <p className="text-sm text-muted-foreground">Previsto para daqui 30 dias</p>
                   </div>
-                  <p className="font-bold">R$ 2.500,00</p>
+                  <p className="font-bold">€ 2.500,00</p>
                 </div>
                 <Button variant="outline" size="sm" className="mt-2 w-full">Antecipar</Button>
               </CardContent>
@@ -35,7 +35,7 @@ const SalesAdvance = () => {
                     <p className="font-medium">Venda 15/06/2025</p>
                     <p className="text-sm text-muted-foreground">Previsto para daqui 33 dias</p>
                   </div>
-                  <p className="font-bold">R$ 1.820,00</p>
+                  <p className="font-bold">€ 1.820,00</p>
                 </div>
                 <Button variant="outline" size="sm" className="mt-2 w-full">Antecipar</Button>
               </CardContent>

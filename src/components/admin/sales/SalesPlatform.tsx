@@ -37,7 +37,7 @@ const SalesPlatform = () => {
     
     toast({
       title: "Venda registrada com sucesso",
-      description: `Comissão: R$ ${novaVenda.comissao.toFixed(2)}`,
+      description: `Comissão: € ${novaVenda.comissao.toFixed(2)}`,
     });
     
     setProduto('');
@@ -50,7 +50,7 @@ const SalesPlatform = () => {
     if (result.success) {
       toast({
         title: "Transferência realizada",
-        description: `R$ ${result.amount.toFixed(2)} transferido para a conta de ${result.account.titular}`,
+        description: `€ ${result.amount.toFixed(2)} transferido para a conta de ${result.account.titular}`,
       });
       
       // Atualizar as vendas (não é necessário, mas mantém o estado atualizado)
@@ -65,7 +65,7 @@ const SalesPlatform = () => {
   };
   
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR');
+    return date.toLocaleDateString('de-DE') + ' ' + date.toLocaleTimeString('de-DE');
   };
   
   // Calcular comissão acumulada
@@ -91,7 +91,7 @@ const SalesPlatform = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Comissões Acumuladas</p>
-                    <p className="text-2xl font-bold">R$ {comissoesAcumuladas.toFixed(2)}</p>
+                    <p className="text-2xl font-bold">€ {comissoesAcumuladas.toFixed(2)}</p>
                   </div>
                   <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
                     <DollarSign className="text-primary" />
@@ -130,7 +130,7 @@ const SalesPlatform = () => {
                   />
                 </div>
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium mb-1 block">Valor (R$)</label>
+                  <label className="text-sm font-medium mb-1 block">Valor (€)</label>
                   <Input 
                     placeholder="0,00" 
                     type="number" 
@@ -162,8 +162,8 @@ const SalesPlatform = () => {
                   <TableRow>
                     <TableHead>Data</TableHead>
                     <TableHead>Produto</TableHead>
-                    <TableHead className="text-right">Valor (R$)</TableHead>
-                    <TableHead className="text-right">Comissão (R$)</TableHead>
+                    <TableHead className="text-right">Valor (€)</TableHead>
+                    <TableHead className="text-right">Comissão (€)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
