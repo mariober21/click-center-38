@@ -9,6 +9,8 @@ import WalletSection from "./navigation/WalletSection";
 import PartnershipSection from "./navigation/PartnershipSection";
 import ToolsSection from "./navigation/ToolsSection";
 import StandardNavItem from "./navigation/StandardNavItem";
+import { ADMIN_ROUTES, adminRoutingService } from "@/services/AdminRoutingService";
+import { adminSystemService } from "@/services/AdminSystemService";
 
 interface SidebarNavigationProps {
   isSidebarOpen: boolean;
@@ -16,6 +18,8 @@ interface SidebarNavigationProps {
 
 const SidebarNavigation = ({ isSidebarOpen }: SidebarNavigationProps) => {
   const location = useLocation();
+  const currentPath = location.pathname;
+  
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({
     products: false,
     marketing: false,
@@ -25,6 +29,17 @@ const SidebarNavigation = ({ isSidebarOpen }: SidebarNavigationProps) => {
     wallet: false
   });
   
+  // Initialize section functionality based on admin system
+  useEffect(() => {
+    // Check if this is a financial route that needs correction
+    const correctedPath = adminRoutingService.getFinancialPath(currentPath);
+    if (correctedPath !== currentPath) {
+      // In a real app we would use navigate() here
+      // For demo, we'll just log it
+      console.log(`Route would be corrected from ${currentPath} to ${correctedPath}`);
+    }
+  }, [currentPath]);
+  
   // Auto expand the section based on current route
   useEffect(() => {
     const path = location.pathname;
@@ -33,7 +48,7 @@ const SidebarNavigation = ({ isSidebarOpen }: SidebarNavigationProps) => {
       setExpandedItems(prev => ({ ...prev, products: true }));
     } else if (path.includes("/admin/marketing")) {
       setExpandedItems(prev => ({ ...prev, marketing: true }));
-    } else if (path.includes("/admin/orders")) {
+    } else if (path.includes("/admin/orders") || path.includes("/admin/sales")) {
       setExpandedItems(prev => ({ ...prev, sales: true }));
     } else if (path.includes("/admin/partnership")) {
       setExpandedItems(prev => ({ ...prev, partnership: true }));
@@ -45,6 +60,13 @@ const SidebarNavigation = ({ isSidebarOpen }: SidebarNavigationProps) => {
   }, [location.pathname]);
 
   const toggleSection = (section: string) => {
+    // First check if the section is functioning
+    const sectionKey = section as any;
+    if (!adminSystemService.getSectionStatus(sectionKey)) {
+      // If section is not functioning, fix it
+      adminSystemService.fixSection(sectionKey);
+    }
+    
     setExpandedItems(prev => ({
       ...prev,
       [section]: !prev[section]

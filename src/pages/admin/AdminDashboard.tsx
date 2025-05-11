@@ -6,6 +6,7 @@ import RecentActivities from "@/components/admin/dashboard/RecentActivities";
 import CourseManagementCards from "@/components/admin/dashboard/CourseManagementCards";
 import RevenueChart from "@/components/admin/dashboard/RevenueChart";
 import SalesPlatform from "@/components/admin/sales/SalesPlatform";
+import SystemStatusPanel from "@/components/admin/dashboard/SystemStatusPanel";
 
 const mockStats = {
   totalUsers: 1235,
@@ -24,6 +25,9 @@ const AdminDashboard = () => {
       <div className="space-y-8">
         <DashboardHeader />
         <StatsOverview stats={mockStats} />
+        
+        {/* System Status Panel - New Addition */}
+        <SystemStatusPanel />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <RevenueChart totalRevenue={mockStats.totalRevenue} />

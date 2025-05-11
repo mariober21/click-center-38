@@ -1,5 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import ActionLogger from "@/components/admin/utils/ActionLogger";
+import { Download, RefreshCw } from "lucide-react";
 
 const SalesBalance = () => {
   return (
@@ -7,7 +10,19 @@ const SalesBalance = () => {
       <h1 className="text-2xl font-bold mb-6">Saldo</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Detalhes do Saldo</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Detalhes do Saldo</CardTitle>
+            <div className="flex gap-2">
+              <ActionLogger section="vendas" action="Download do relatório de saldo" variant="outline">
+                <Download size={16} className="mr-2" />
+                Exportar
+              </ActionLogger>
+              <ActionLogger section="vendas" action="Atualização manual de saldo" variant="outline">
+                <RefreshCw size={16} className="mr-2" />
+                Atualizar
+              </ActionLogger>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="py-4 text-center">

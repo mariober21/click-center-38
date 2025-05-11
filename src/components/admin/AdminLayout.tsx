@@ -3,6 +3,7 @@ import { useState, useEffect, ReactNode } from "react";
 import AdminHeader from "./layout/AdminHeader";
 import Sidebar from "./layout/Sidebar";
 import MainContent from "./layout/MainContent";
+import ErrorBoundary from "./ErrorBoundary";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -44,7 +45,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         
         {/* Main content */}
         <MainContent isSidebarOpen={isSidebarOpen}>
-          {children}
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
         </MainContent>
       </div>
     </div>

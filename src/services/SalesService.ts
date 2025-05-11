@@ -1,7 +1,5 @@
 
-// Convert the Python PlataformaVendas class to TypeScript
-
-interface BankAccount {
+interface ContaBancaria {
   titular: string;
   banco: string;
   agencia: string;
@@ -13,75 +11,107 @@ export interface Sale {
   valor: number;
   comissao: number;
   data: Date;
+  transferida: boolean;
 }
 
-export class SalesService {
-  private taxaComissao: number;
-  private contaBancaria: BankAccount;
-  private vendas: Sale[];
-  private comissoesAcumuladas: number;
+class SalesPlatformService {
+  private vendas: Sale[] = [];
+  private comissoesAcumuladas: number = 0;
+  private contaBancaria: ContaBancaria = {
+    titular: "Usuário Demo",
+    banco: "Banco Exemplo",
+    agencia: "1234",
+    numero: "12345-6"
+  };
 
-  constructor(taxaComissao: number, contaBancaria: BankAccount) {
-    this.taxaComissao = taxaComissao / 100; // Converter para decimal
-    this.contaBancaria = contaBancaria;
-    this.vendas = [];
-    this.comissoesAcumuladas = 0;
+  constructor() {
+    // Simulated pre-existing data
+    this.vendas = [
+      {
+        produto: "Curso de Marketing Digital",
+        valor: 297,
+        comissao: 29.7,
+        data: new Date(2023, 4, 15),
+        transferida: true
+      },
+      {
+        produto: "Ebook: Vendas Online",
+        valor: 47,
+        comissao: 4.7,
+        data: new Date(2023, 4, 10),
+        transferida: false
+      }
+    ];
+    
+    this.recalcularComissoesAcumuladas();
   }
 
-  registrarVenda(produto: string, valor: number): Sale {
-    const comissao = valor * this.taxaComissao;
-    this.comissoesAcumuladas += comissao;
-    const venda: Sale = {
+  private recalcularComissoesAcumuladas(): void {
+    this.comissoesAcumuladas = this.vendas
+      .filter(venda => !venda.transferida)
+      .reduce((total, venda) => total + venda.comissao, 0);
+  }
+
+  public registrarVenda(produto: string, valor: number): Sale {
+    const comissao = valor * 0.1; // 10% de comissão
+    
+    const novaVenda: Sale = {
       produto,
       valor,
       comissao,
-      data: new Date()
+      data: new Date(),
+      transferida: false
     };
-    this.vendas.push(venda);
-    return venda;
+    
+    this.vendas.unshift(novaVenda); // Adiciona no início do array
+    this.recalcularComissoesAcumuladas();
+    
+    return novaVenda;
   }
 
-  transferirComissoes(): {success: boolean, amount: number, account: BankAccount} {
-    if (this.comissoesAcumuladas > 0) {
-      const result = {
-        success: true,
-        amount: this.comissoesAcumuladas,
-        account: this.contaBancaria
-      };
-      this.comissoesAcumuladas = 0;
-      return result;
-    } else {
+  public getVendas(): Sale[] {
+    return [...this.vendas];
+  }
+
+  public getComissoesAcumuladas(): number {
+    return this.comissoesAcumuladas;
+  }
+
+  public getContaBancaria(): ContaBancaria {
+    return { ...this.contaBancaria };
+  }
+
+  public setContaBancaria(dados: Partial<ContaBancaria>): void {
+    this.contaBancaria = { ...this.contaBancaria, ...dados };
+  }
+
+  public transferirComissoes(): { success: boolean, amount: number, account: ContaBancaria } {
+    const amount = this.comissoesAcumuladas;
+    
+    if (amount <= 0) {
       return {
         success: false,
         amount: 0,
         account: this.contaBancaria
       };
     }
-  }
-
-  getVendas(): Sale[] {
-    return [...this.vendas];
-  }
-
-  getComissoesAcumuladas(): number {
-    return this.comissoesAcumuladas;
-  }
-
-  getContaBancaria(): BankAccount {
-    return {...this.contaBancaria};
+    
+    // Marcar todas as comissões como transferidas
+    this.vendas.forEach(venda => {
+      if (!venda.transferida) {
+        venda.transferida = true;
+      }
+    });
+    
+    this.comissoesAcumuladas = 0;
+    
+    return {
+      success: true,
+      amount,
+      account: this.contaBancaria
+    };
   }
 }
 
-// Inicializa a plataforma com dados de exemplo
-const contaBancariaAdmin = {
-  titular: "João Silva",
-  banco: "Banco Exemplo",
-  agencia: "1234",
-  numero: "56789-0"
-};
-
-export const salesPlatform = new SalesService(10, contaBancariaAdmin);
-
-// Adiciona dados de exemplo
-salesPlatform.registrarVenda("Curso Python", 500);
-salesPlatform.registrarVenda("E-book Django", 150);
+// Export a singleton instance
+export const salesPlatform = new SalesPlatformService();
