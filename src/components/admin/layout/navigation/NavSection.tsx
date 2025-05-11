@@ -8,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from "@/components/ui/collapsible";
-import { adminSystemService } from "@/services/AdminSystemService";
+import { adminSystemService, AdminSectionKey } from "@/services/AdminSystemService";
 
 export interface NavLink {
   path: string;
@@ -45,14 +45,24 @@ const NavSection = ({
     return location.pathname === path;
   };
 
-  // Verificar status da seção
-  const sectionStatus = adminSystemService.getSectionStatus(sectionKey);
+  // Verificar status da seção - Convertendo sectionKey para o tipo AdminSectionKey
+  // apenas se a chave existir no tipo AdminSectionKey
+  const isValidSectionKey = (key: string): key is AdminSectionKey => {
+    return ["vendas", "marketing", "carteira", "usuarios", "parcerias", "produtos"].includes(key);
+  };
+  
+  // Use o sectionKey convertido apenas se for válido
+  const validSectionKey = isValidSectionKey(sectionKey) ? sectionKey : "marketing";
+  const sectionStatus = adminSystemService.getSectionStatus(validSectionKey);
   
   // Handler para clicar em um link
   const handleLinkClick = (e: React.MouseEvent, path: string) => {
     if (!sectionStatus) {
       e.preventDefault();
-      adminSystemService.fixSection(sectionKey);
+      // Apenas repara se for uma chave válida
+      if (isValidSectionKey(sectionKey)) {
+        adminSystemService.fixSection(validSectionKey);
+      }
       setErrorState(false);
       toggleSection(sectionKey);
     }
@@ -85,7 +95,7 @@ const NavSection = ({
               <Link
                 key={link.path}
                 to={link.path}
-                className={`block py-2 px-3 rounded-md transition-colors ${isLinkActive(link.path) ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
+                className={`block py-2 px-3 rounded-md transition-colors ${isLinkActive(link.path) ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted/50"}`}
                 onClick={(e) => handleLinkClick(e, link.path)}
               >
                 {link.label}

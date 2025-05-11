@@ -13,12 +13,12 @@ interface AdminSystemState {
 class AdminSystemService {
   private state: AdminSystemState = {
     sections: {
-      vendas: false,
+      vendas: true,
       marketing: false,
-      carteira: false,
-      usuarios: false,
-      parcerias: false,
-      produtos: false
+      carteira: true,
+      usuarios: true,
+      parcerias: true,
+      produtos: true
     },
     lastChecked: null
   };
@@ -99,8 +99,11 @@ class AdminSystemService {
     });
   }
 
-  public logAction(section: AdminSectionKey, action: string): boolean {
-    if (!this.state.sections[section]) {
+  public logAction(section: string, action: string): boolean {
+    // Convert section to AdminSectionKey if valid
+    const validSection = (this.isValidSectionKey(section) ? section : "marketing") as AdminSectionKey;
+    
+    if (!this.state.sections[validSection]) {
       toast({
         title: "Erro",
         description: `Ação em '${section}' não pode ser realizada porque a seção está com problema.`,
@@ -122,6 +125,11 @@ class AdminSystemService {
 
   public getLastCheckTime(): Date | null {
     return this.state.lastChecked;
+  }
+  
+  // Helper method to check if a string is a valid AdminSectionKey
+  public isValidSectionKey(key: string): key is AdminSectionKey {
+    return ["vendas", "marketing", "carteira", "usuarios", "parcerias", "produtos"].includes(key as AdminSectionKey);
   }
 }
 

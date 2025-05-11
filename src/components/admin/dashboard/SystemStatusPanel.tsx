@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,16 +9,12 @@ import { toast } from "@/hooks/use-toast";
 
 const SystemStatusPanel = () => {
   const [systemStatus, setSystemStatus] = useState<Record<AdminSectionKey, boolean>>({
-    dashboard: true,
-    products: true,
+    vendas: true,
     marketing: false,
-    sales: true,
-    partnership: true,
-    tools: true,
-    wallet: true,
-    users: true,
-    content: true,
-    settings: true
+    carteira: true,
+    usuarios: true,
+    parcerias: true,
+    produtos: true
   });
   
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -26,8 +23,9 @@ const SystemStatusPanel = () => {
   useEffect(() => {
     const status: Record<AdminSectionKey, boolean> = {} as Record<AdminSectionKey, boolean>;
     
-    Object.keys(adminSystemService.getSectionStatuses()).forEach((key) => {
-      const sectionKey = key as AdminSectionKey;
+    // Initialize with all section statuses from the service
+    const allSections = Object.keys(adminSystemService.getAllSectionsStatus()) as AdminSectionKey[];
+    allSections.forEach((sectionKey) => {
       status[sectionKey] = adminSystemService.getSectionStatus(sectionKey);
     });
     
@@ -41,8 +39,9 @@ const SystemStatusPanel = () => {
     setTimeout(() => {
       const status: Record<AdminSectionKey, boolean> = {} as Record<AdminSectionKey, boolean>;
       
-      Object.keys(adminSystemService.getSectionStatuses()).forEach((key) => {
-        const sectionKey = key as AdminSectionKey;
+      // Update all section statuses
+      const allSections = Object.keys(adminSystemService.getAllSectionsStatus()) as AdminSectionKey[];
+      allSections.forEach((sectionKey) => {
         status[sectionKey] = adminSystemService.getSectionStatus(sectionKey);
       });
       
